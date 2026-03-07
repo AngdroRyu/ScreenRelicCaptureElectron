@@ -1,0 +1,98 @@
+[
+  {
+    "stat": "SPD",
+    "values": {
+      "low": 2,
+      "med": 2.3,
+      "high": 2.6
+    }
+  },
+  {
+    "stat": "HP",
+    "values": {
+      "low": 33.87,
+      "med": 38.103755,
+      "high": 42.33751
+    }
+  },
+  {
+    "stat": "ATK",
+    "values": {
+      "low": 16.935,
+      "med": 19.051877,
+      "high": 21.168754
+    }
+  },
+  {
+    "stat": "DEF",
+    "values": {
+      "low": 16.935,
+      "med": 19.051877,
+      "high": 21.168754
+    }
+  },
+  {
+    "stat": "HP%",
+    "values": {
+      "low": 0.03456,
+      "med": 0.03888,
+      "high": 0.0432
+    }
+  },
+  {
+    "stat": "ATK%",
+    "values": {
+      "low": 0.03456,
+      "med": 0.03888,
+      "high": 0.0432
+    }
+  },
+  {
+    "stat": "DEF%",
+    "values": {
+      "low": 0.0432,
+      "med": 0.0486,
+      "high": 0.054
+    }
+  },
+  {
+    "stat": "Break Effect",
+    "values": {
+      "low": 0.05184,
+      "med": 0.05832,
+      "high": 0.0648
+    }
+  },
+  {
+    "stat": "Effect Hit Rate",
+    "values": {
+      "low": 0.03456,
+      "med": 0.03888,
+      "high": 0.0432
+    }
+  },
+  {
+    "stat": "Effect RES",
+    "values": {
+      "low": 0.03456,
+      "med": 0.03888,
+      "high": 0.0432
+    }
+  },
+  {
+    "stat": "CRIT Rate",
+    "values": {
+      "low": 0.02592,
+      "med": 0.02916,
+      "high": 0.0324
+    }
+  },
+  {
+    "stat": "CRIT DMG",
+    "values": {
+      "low": 0.05184,
+      "med": 0.05832,
+      "high": 0.0648
+    }
+  }
+]
