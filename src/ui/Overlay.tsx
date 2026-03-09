@@ -1,51 +1,58 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-// Overlay.tsx
 import React, { useState, useEffect, useCallback } from "react";
+export interface Rect {
+	start: { x: number; y: number };
+	end: { x: number; y: number };
+}
 
 export default function Overlay() {
+	// Current drag
 	const [start, setStart] = useState<{ x: number; y: number } | null>(null);
 	const [end, setEnd] = useState<{ x: number; y: number } | null>(null);
 
-	// Start dragging
+	// Last saved rectangle (for display)
+	const [lastRect, setLastRect] = useState<Rect | null>(null);
+
+	// Load last rectangle when overlay mounts
+	useEffect(() => {
+		const fetchLastRect = async () => {
+			if (window.electron.getLastRect) {
+				const rect = await window.electron.getLastRect();
+				if (rect) {
+					setLastRect(rect);
+					console.log("Loaded last rectangle:", rect);
+				}
+			}
+		};
+		fetchLastRect();
+	}, []);
+
+	// Drag handlers
 	const handleMouseDown = (e: React.MouseEvent) => {
 		setStart({ x: e.clientX, y: e.clientY });
 		setEnd(null);
 	};
 
-	// Dragging
 	const handleMouseMove = (e: React.MouseEvent) => {
 		if (start) setEnd({ x: e.clientX, y: e.clientY });
 	};
 
-	// Mouse up: crop & save screenshot, then close overlay
-
 	const handleMouseUp = useCallback(async () => {
-		if (!start || !end) return;
+		if (!start || !end) {
+			await window.electron.closeOverlay();
+			return;
+		}
 
-		const rect: Rect = {
-			left: Math.min(start.x, end.x),
-			top: Math.min(start.y, end.y),
-			width: Math.abs(start.x - end.x),
-			height: Math.abs(start.y - end.y)
-		};
-		console.log(rect);
-		const screenshot = await window.electron.captureScreen();
-		const cropped = await cropImage(screenshot, rect);
-		await window.electron.saveScreenshot(cropped);
+		const rect: Rect = { start, end };
+
+		if (window.electron.setLastRect) {
+			await window.electron.setLastRect(rect); // save for next session
+		}
+		setLastRect(rect); // update display
 		await window.electron.closeOverlay();
-	}, [start, end]); // dependencies
+	}, [start, end]);
 
-	const rect =
-		start && end
-			? {
-					left: Math.min(start.x, end.x),
-					top: Math.min(start.y, end.y),
-					width: Math.abs(start.x - end.x),
-					height: Math.abs(start.y - end.y)
-				}
-			: null;
-
-	// ESC key cancels overlay
+	// ESC cancels overlay
 	useEffect(() => {
 		const handleKey = (e: KeyboardEvent) => {
 			if (e.key === "Escape") window.electron.closeOverlay();
@@ -54,7 +61,7 @@ export default function Overlay() {
 		return () => window.removeEventListener("keydown", handleKey);
 	}, []);
 
-	// Global mouseup fallback (in case mouseup occurs outside div)
+	// Global mouseup fallback
 	useEffect(() => {
 		const handleGlobalMouseUp = (_: MouseEvent) => {
 			if (start && end) handleMouseUp();
@@ -62,6 +69,24 @@ export default function Overlay() {
 		window.addEventListener("mouseup", handleGlobalMouseUp);
 		return () => window.removeEventListener("mouseup", handleGlobalMouseUp);
 	}, [start, end, handleMouseUp]);
+
+	// Determine which rectangle to display
+	const displayRect =
+		start && end
+			? {
+					left: Math.min(start.x, end.x),
+					top: Math.min(start.y, end.y),
+					width: Math.abs(start.x - end.x),
+					height: Math.abs(start.y - end.y)
+				}
+			: lastRect
+				? {
+						left: Math.min(lastRect.start.x, lastRect.end.x),
+						top: Math.min(lastRect.start.y, lastRect.end.y),
+						width: Math.abs(lastRect.start.x - lastRect.end.x),
+						height: Math.abs(lastRect.start.y - lastRect.end.y)
+					}
+				: null;
 
 	return (
 		<div
@@ -72,62 +97,26 @@ export default function Overlay() {
 				width: "100vw",
 				height: "100vh",
 				cursor: "crosshair",
-				backgroundColor: "rgba(0,0,0,0.3)", // dark overlay
+				backgroundColor: "rgba(0,0,0,0.3)",
 				zIndex: 9999
 			}}
 			onMouseDown={handleMouseDown}
 			onMouseMove={handleMouseMove}
 			onMouseUp={handleMouseUp}
 		>
-			{rect && (
+			{displayRect && (
 				<div
 					style={{
 						position: "absolute",
-						left: rect.left,
-						top: rect.top,
-						width: rect.width,
-						height: rect.height,
+						left: displayRect.left,
+						top: displayRect.top,
+						width: displayRect.width,
+						height: displayRect.height,
 						border: "2px solid red",
-						backgroundColor: "rgba(255,255,255,0.0)" // transparent inside rectangle
+						backgroundColor: "rgba(255,255,255,0.0)"
 					}}
 				/>
 			)}
 		</div>
 	);
-}
-
-interface Rect {
-	left: number;
-	top: number;
-	width: number;
-	height: number;
-}
-
-// Crop screenshot to selection rectangle
-function cropImage(dataUrl: string, rect: Rect) {
-	const img = new Image();
-	img.src = dataUrl;
-
-	return new Promise<string>((resolve) => {
-		img.onload = () => {
-			const canvas = document.createElement("canvas");
-			canvas.width = rect.width;
-			canvas.height = rect.height;
-			const ctx = canvas.getContext("2d")!;
-
-			ctx.drawImage(
-				img,
-				rect.left,
-				rect.top,
-				rect.width,
-				rect.height,
-				0,
-				0,
-				rect.width,
-				rect.height
-			);
-
-			resolve(canvas.toDataURL("image/png"));
-		};
-	});
 }
