@@ -53,7 +53,7 @@ export function parseRelicFromText(text: string): Relic | null {
 
 	const { set, slot, piece } = setInfo;
 	const mainStatData = detectMainStat(cleanText, slot);
-	const substats = detectSubstats(cleanText, mainStatData?.name);
+	const substats = detectSubstats(mainStatData?.remainingText || cleanText);
 	let imagePath: string | undefined;
 
 	if (relicLookup[piece]) {
@@ -101,6 +101,8 @@ function detectMainStat(text: string, slot: string) {
 			.toLowerCase();
 	}
 
+	let remainingText = text;
+
 	for (const rawLine of lines) {
 		const line = sanitizeLine(rawLine);
 		if (!line) continue;
@@ -111,24 +113,40 @@ function detectMainStat(text: string, slot: string) {
 				// Match number after stat name
 				const regex = new RegExp(`${statLower}\\s*([\\d.]+%?)`);
 				const match = line.match(regex);
-				if (match) return { name: stat, value: match[1] };
+				if (match) {
+					// Remove this line from remaining text
+					const escapedLine = rawLine.replace(/[-/\\^$*+?.()|[\]{}]/g, "\\$&"); // ESLint-friendly
+					const removeRegex = new RegExp(escapedLine, "g");
+					remainingText = remainingText.replace(removeRegex, "").trim();
+
+					return {
+						name: stat,
+						value: match[1],
+						remainingText // ← this is the text without the main stat line
+					};
+				}
 			}
 		}
 	}
-	return null;
+
+	return { name: null, value: null, remainingText: text };
 }
 
 // --- Detect substats ---
-function detectSubstats(text: string, mainStatName?: string) {
+function detectSubstats(text: string) {
 	if (text.includes("(+3 to activate)")) {
+		console.log("Removing (+3 to activate) text");
 		text = text.replace(/\(\+3 to activate\)/g, "").trim();
 	}
 
 	const found: { name: string; value: string }[] = [];
 	const lines = text.split(/\r?\n/);
+	console.log("Lines to process:", lines);
 
 	function sanitizeOCRLine(line: string) {
-		return line.replace(/^[^\w\d.+%]+/, "").trim();
+		const sanitized = line.replace(/^[^\w\d.+%]+/, "").trim();
+		console.log("Sanitized line:", sanitized);
+		return sanitized;
 	}
 
 	for (const rawLine of lines) {
@@ -136,20 +154,25 @@ function detectSubstats(text: string, mainStatName?: string) {
 		if (!line) continue;
 
 		for (const stat of substatNames) {
-			if (mainStatName && stat.toLowerCase() === mainStatName.toLowerCase())
-				continue;
+			const regex = new RegExp(`${stat.toLowerCase()}[^\\d]*([\\d\\.]+%?)`);
+			const match = line.match(regex);
 
-			const match = line.match(
-				new RegExp(`${stat.toLowerCase()}[^\\d]*([\\d\\.]+%?)`)
-			);
 			if (match) {
+				console.log(`Found substat match: ${stat} => ${match[1]}`);
 				found.push({ name: stat, value: match[1] });
 			}
 		}
 	}
 
+	console.log("Substats found so far:", found);
+
 	// Ensure 4 substats
-	while (found.length < 4) found.push({ name: "", value: "" });
+	while (found.length < 4) {
+		found.push({ name: "", value: "" });
+		console.log("Adding empty substat to reach 4 slots");
+	}
+
+	console.log("Final substats:", found);
 	return found;
 }
 const relicLookupPath = path.join(__dirname, "data", "relicLookup.json");

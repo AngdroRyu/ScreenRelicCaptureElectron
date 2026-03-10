@@ -76,18 +76,6 @@ const ScreenCapture: React.FC = () => {
 					View Saved Relics
 				</button>
 			</div>
-
-			{/* Display the cropped screenshot */}
-			{imageSrc && (
-				<div className="mt-8 border-2 border-gray-600 rounded-lg overflow-hidden max-w-[90%] max-h-[70vh]">
-					<img
-						src={imageSrc}
-						alt="Screenshot"
-						className="block w-full h-auto"
-					/>
-				</div>
-			)}
-
 			{/* Display parsed relic */}
 			{currentRelic && (
 				<div className="mt-8 bg-gray-800 p-4 rounded-lg w-full max-w-2xl">
@@ -117,6 +105,16 @@ const ScreenCapture: React.FC = () => {
 							</p>
 						</div>
 					</div>
+				</div>
+			)}
+			{/* Display the cropped screenshot */}
+			{imageSrc && (
+				<div className="mt-8 border-2 border-gray-600 rounded-lg overflow-hidden max-w-[90%] max-h-[70vh]">
+					<img
+						src={imageSrc}
+						alt="Screenshot"
+						className="block w-full h-auto"
+					/>
 				</div>
 			)}
 		</div>
