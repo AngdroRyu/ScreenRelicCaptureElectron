@@ -26,6 +26,7 @@ declare global {
 			parseRelicText: (text: string) => Promise<Relic>;
 			openSavedRelics: () => Promise<void>; // opens the window
 			getSavedRelics: () => Promise<Relic[]>; // ← add this
+			removeSavedRelic: (index: number) => Promise<boolean>;
 		};
 	}
 }

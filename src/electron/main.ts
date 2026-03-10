@@ -12,7 +12,7 @@ import { fileURLToPath } from "url";
 import fs from "fs";
 import { parseRelicFromText } from "./relicParser.js";
 import { saveParsedRelic } from "./saveRelic.js";
-
+import type { Relic } from "./relicParser.js";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
@@ -223,5 +223,23 @@ ipcMain.handle("GET_SAVED_RELICS", () => {
 	} catch (err) {
 		console.error("Failed to load parsedRelics.json:", err);
 		return [];
+	}
+});
+const relicsJsonPath = path.join(app.getPath("documents"), "parsedRelics.json");
+
+ipcMain.handle("REMOVE_RELIC", (_event, index: number) => {
+	if (!fs.existsSync(relicsJsonPath)) return false;
+
+	try {
+		const raw = fs.readFileSync(relicsJsonPath, "utf-8");
+		const relics: Relic[] = JSON.parse(raw);
+		if (index < 0 || index >= relics.length) return false;
+
+		relics.splice(index, 1);
+		fs.writeFileSync(relicsJsonPath, JSON.stringify(relics, null, 2));
+		return true;
+	} catch (err) {
+		console.error("Failed to remove relic:", err);
+		return false;
 	}
 });
