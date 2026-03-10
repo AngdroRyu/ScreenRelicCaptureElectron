@@ -10,7 +10,7 @@ import {
 import path, { dirname } from "path";
 import { fileURLToPath } from "url";
 import fs from "fs";
-
+import { parseRelicFromText } from "./relicParser.js";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
@@ -119,7 +119,6 @@ ipcMain.handle("SCREENSHOT", async () => {
 	return screen.thumbnail.toDataURL();
 });
 
-// <--- THIS IS THE MISSING PIECE --->
 ipcMain.handle("save-screenshot", async (_event, dataUrl: string) => {
 	try {
 		const base64Data = dataUrl.replace(/^data:image\/png;base64,/, "");
@@ -164,7 +163,9 @@ app.whenReady().then(() => {
 		});
 	});
 });
-
+ipcMain.handle("PARSE_RELIC_TEXT", (_event, text: string) => {
+	return parseRelicFromText(text);
+});
 app.on("will-quit", () => {
 	globalShortcut.unregisterAll();
 });

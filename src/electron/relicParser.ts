@@ -2,8 +2,8 @@
 import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
-import mainStatsBySlot from "../data/mainStat.js";
-import substatNames from "../data/substatNames.js";
+import mainStatsBySlot from "./data/mainStat.js";
+import substatNames from "./data/substatNames.js";
 
 // Convert ESM URL to __dirname
 const __filename = fileURLToPath(import.meta.url);
@@ -11,7 +11,7 @@ const __dirname = path.dirname(__filename);
 
 // Load relics.json
 const relicsFilePath = path.join(__dirname, "data", "relics.json");
-let relicData: any;
+let relicData: { domains: RelicDomain[] };
 
 try {
 	const raw = fs.readFileSync(relicsFilePath, "utf-8");
@@ -73,6 +73,7 @@ export function parseRelicFromText(text: string): Relic | null {
 
 // --- Helper: find relic set ---
 function findRelicSet(text: string) {
+	//console.log("Searching relic set in text:", text);
 	for (const domain of domains) {
 		for (const set of domain.sets) {
 			for (const slot in set.pieces) {
@@ -95,7 +96,7 @@ function detectMainStat(text: string, slot: string) {
 
 	function sanitizeLine(line: string) {
 		return line
-			.replace(/[^\w\d\.+% ]/g, "")
+			.replace(/[^\w\d.+% ]/g, "") // remove OCR junk
 			.trim()
 			.toLowerCase();
 	}
@@ -105,8 +106,11 @@ function detectMainStat(text: string, slot: string) {
 		if (!line) continue;
 
 		for (const stat of possibleStats) {
-			if (line.includes(stat.toLowerCase())) {
-				const match = line.match(/([\d\.]+%?)/);
+			const statLower = stat.toLowerCase();
+			if (line.includes(statLower)) {
+				// Match number after stat name
+				const regex = new RegExp(`${statLower}\\s*([\\d.]+%?)`);
+				const match = line.match(regex);
 				if (match) return { name: stat, value: match[1] };
 			}
 		}
@@ -124,7 +128,7 @@ function detectSubstats(text: string, mainStatName?: string) {
 	const lines = text.split(/\r?\n/);
 
 	function sanitizeOCRLine(line: string) {
-		return line.replace(/^[^\w\d\.+%]+/, "").trim();
+		return line.replace(/^[^\w\d.+%]+/, "").trim();
 	}
 
 	for (const rawLine of lines) {
@@ -150,7 +154,11 @@ function detectSubstats(text: string, mainStatName?: string) {
 }
 const relicLookupPath = path.join(__dirname, "data", "relicLookup.json");
 
-let relicLookup: any = {};
+interface RelicLookupEntry {
+	imagePath: string;
+}
+
+let relicLookup: Record<string, RelicLookupEntry> = {};
 
 try {
 	const raw = fs.readFileSync(relicLookupPath, "utf-8");

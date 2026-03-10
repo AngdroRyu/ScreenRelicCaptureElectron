@@ -134,7 +134,7 @@ ipcMain.on("ocr-image", async (_, dataUrl: string) => {
 		const relic = parseRelicFromText(text);
 		if (relic) {
 			// lookup imagePath in your relicLookup JSON
-			const lookupPath = path.join(__dirname, "../data/relicLookup.json");
+			const lookupPath = path.join(__dirname, "./data/relicLookup.json");
 			let relicLookup: Record<string, { imagePath: string }> = {};
 			if (fs.existsSync(lookupPath)) {
 				relicLookup = JSON.parse(fs.readFileSync(lookupPath, "utf-8"));

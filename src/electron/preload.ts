@@ -1,6 +1,7 @@
 import { contextBridge, ipcRenderer } from "electron";
 import type { Rect } from "./main.js";
 import type { IpcRendererEvent } from "electron";
+import type { Relic } from "./relicParser.js";
 declare global {
 	interface Window {
 		electron: {
@@ -24,6 +25,7 @@ declare global {
 					data: { image: string; rect: Rect }
 				) => void
 			) => void;
+			parseRelicText: (text: string) => Promise<Relic>;
 		};
 	}
 }
@@ -52,5 +54,6 @@ contextBridge.exposeInMainWorld("electron", {
 		) => void
 	) => {
 		ipcRenderer.removeListener(channel, listener);
-	}
+	},
+	parseRelicText: (text: string) => ipcRenderer.invoke("PARSE_RELIC_TEXT", text)
 });

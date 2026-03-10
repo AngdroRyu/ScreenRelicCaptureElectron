@@ -1,4 +1,5 @@
 export {};
+import type { Relic } from "./relicParser.js";
 declare global {
 	interface Window {
 		electron: {
@@ -22,6 +23,7 @@ declare global {
 					data: { image: string; rect: Rect }
 				) => void
 			) => void;
+			parseRelicText: (text: string) => Promise<Relic>;
 		};
 	}
 }
