@@ -8,14 +8,14 @@ type CaptureProps = {
 export const handleCapture = async ({ onCallback }: CaptureProps) => {
 	try {
 		const screenshot: ScreenshotData | null =
-			await window.electronAPI.captureScreen();
+			await window.electron.captureScreen();
 
 		if (!screenshot) {
 			alert("Capture Failed");
 			return;
 		}
 
-		await window.electronAPI.saveScreenshot(screenshot);
+		await window.electron.saveScreenshot(screenshot);
 
 		onCallback?.(screenshot);
 	} catch (error) {

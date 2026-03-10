@@ -27,7 +27,7 @@ declare global {
 		};
 	}
 }
-
+console.log("Hello from preload");
 contextBridge.exposeInMainWorld("electron", {
 	captureScreen: () => ipcRenderer.invoke("SCREENSHOT"),
 	saveScreenshot: (data: string) => ipcRenderer.invoke("save-screenshot", data),

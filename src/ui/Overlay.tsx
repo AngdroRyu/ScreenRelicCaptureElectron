@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
+console.log("electron API:", window.electron);
 import React, { useState, useEffect, useCallback } from "react";
 export interface Rect {
 	start: { x: number; y: number };

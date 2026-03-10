@@ -52,7 +52,7 @@ const createWindow = () => {
 		width: 800,
 		height: 600,
 		webPreferences: {
-			nodeIntegration: true,
+			nodeIntegration: false,
 			contextIsolation: true,
 			preload: path.join(__dirname, "preload.js"),
 			sandbox: false
@@ -83,7 +83,8 @@ function createOverlay() {
 		webPreferences: {
 			preload: path.join(__dirname, "preload.js"),
 			contextIsolation: true,
-			nodeIntegration: true
+			nodeIntegration: false,
+			sandbox: false
 		}
 	});
 
