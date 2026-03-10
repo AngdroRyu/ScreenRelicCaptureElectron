@@ -26,6 +26,8 @@ declare global {
 				) => void
 			) => void;
 			parseRelicText: (text: string) => Promise<Relic>;
+			openSavedRelics: () => Promise<void>; // opens the window
+			getSavedRelics: () => Promise<Relic[]>; // ← add this
 		};
 	}
 }
@@ -55,5 +57,8 @@ contextBridge.exposeInMainWorld("electron", {
 	) => {
 		ipcRenderer.removeListener(channel, listener);
 	},
-	parseRelicText: (text: string) => ipcRenderer.invoke("PARSE_RELIC_TEXT", text)
+	parseRelicText: (text: string) =>
+		ipcRenderer.invoke("PARSE_RELIC_TEXT", text),
+	openSavedRelics: () => ipcRenderer.invoke("OPEN_SAVED_RELICS"),
+	getSavedRelics: () => ipcRenderer.invoke("GET_SAVED_RELICS")
 });

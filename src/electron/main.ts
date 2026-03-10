@@ -11,6 +11,8 @@ import path, { dirname } from "path";
 import { fileURLToPath } from "url";
 import fs from "fs";
 import { parseRelicFromText } from "./relicParser.js";
+import { saveParsedRelic } from "./saveRelic.js";
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
@@ -67,6 +69,10 @@ const createWindow = () => {
 // OVERLAY WINDOW
 // --------------------
 function createOverlay() {
+	if (overlayWindow) {
+		overlayWindow.focus();
+		return;
+	}
 	const { width, height } = screen.getPrimaryDisplay().bounds;
 
 	overlayWindow = new BrowserWindow({
@@ -164,8 +170,58 @@ app.whenReady().then(() => {
 	});
 });
 ipcMain.handle("PARSE_RELIC_TEXT", (_event, text: string) => {
-	return parseRelicFromText(text);
+	const relic = parseRelicFromText(text);
+
+	if (relic) {
+		saveParsedRelic(relic);
+	}
+
+	return relic;
 });
 app.on("will-quit", () => {
 	globalShortcut.unregisterAll();
+});
+let savedRelicsWindow: BrowserWindow | null = null;
+
+function openSavedRelicsWindow() {
+	if (savedRelicsWindow) {
+		savedRelicsWindow.focus();
+		return;
+	}
+
+	savedRelicsWindow = new BrowserWindow({
+		width: 600,
+		height: 800,
+		title: "Saved Relics",
+		webPreferences: {
+			nodeIntegration: false,
+			contextIsolation: true,
+			preload: path.join(__dirname, "preload.js"),
+			sandbox: false
+		}
+	});
+
+	savedRelicsWindow.loadFile(
+		path.join(app.getAppPath(), "dist-react", "index.html"),
+		{ hash: "/saved-relics" }
+	);
+
+	savedRelicsWindow.on("closed", () => {
+		savedRelicsWindow = null;
+	});
+}
+
+// Expose via IPC
+ipcMain.handle("OPEN_SAVED_RELICS", () => openSavedRelicsWindow());
+ipcMain.handle("GET_SAVED_RELICS", () => {
+	const relicsPath = path.join(app.getPath("documents"), "parsedRelics.json");
+	if (!fs.existsSync(relicsPath)) return [];
+
+	try {
+		const raw = fs.readFileSync(relicsPath, "utf-8");
+		return JSON.parse(raw);
+	} catch (err) {
+		console.error("Failed to load parsedRelics.json:", err);
+		return [];
+	}
 });

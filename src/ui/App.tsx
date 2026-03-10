@@ -2,21 +2,20 @@
 import React, { useState, useEffect } from "react";
 import type { IpcRendererEvent } from "electron";
 import Tesseract from "tesseract.js";
+
+import type { Relic } from "../electron/relicParser.js";
 export interface Rect {
 	start: { x: number; y: number };
 	end: { x: number; y: number };
 }
-
 const ScreenCapture: React.FC = () => {
 	const [imageSrc, setImageSrc] = useState<string | null>(null);
+	const [currentRelic, setCurrentRelic] = useState<Relic | null>(null);
 
 	// Full screen capture
 	const handleCapture = async () => {
 		const screenshot = await window.electron.captureScreen();
-		if (!screenshot) {
-			alert("Capture failed");
-			return;
-		}
+		if (!screenshot) return alert("Capture failed");
 		setImageSrc(screenshot);
 		await window.electron.saveScreenshot(screenshot);
 	};
@@ -27,25 +26,24 @@ const ScreenCapture: React.FC = () => {
 			_event: IpcRendererEvent,
 			data: { image: string; rect: Rect }
 		) => {
-			//console.log("CROP_AND_SAVE received:", data);
-
-			// Crop the image in the renderer
+			// Crop the image
 			const cropped = await cropImage(data.image, data.rect);
-
 			setImageSrc(cropped);
 
+			// OCR
 			const detectedText = await readText(cropped);
 
+			// Parse relic
 			const relic = await window.electron.parseRelicText(detectedText);
 
-			console.log("Parsed relic:", relic);
-
-			// Save it
-			//await window.electron.saveScreenshot(cropped);
+			if (relic) {
+				setCurrentRelic(relic);
+			} else {
+				setCurrentRelic(null);
+			}
 		};
 
 		window.electron.on("CROP_AND_SAVE", handleCropAndSave);
-
 		return () => {
 			window.electron.removeListener("CROP_AND_SAVE", handleCropAndSave);
 		};
@@ -71,8 +69,15 @@ const ScreenCapture: React.FC = () => {
 				>
 					Capture Area
 				</button>
+				<button
+					onClick={() => window.electron.openSavedRelics()}
+					className="px-6 py-3 bg-purple-600 hover:bg-purple-500 rounded-md font-medium transition"
+				>
+					View Saved Relics
+				</button>
 			</div>
 
+			{/* Display the cropped screenshot */}
 			{imageSrc && (
 				<div className="mt-8 border-2 border-gray-600 rounded-lg overflow-hidden max-w-[90%] max-h-[70vh]">
 					<img
@@ -80,6 +85,38 @@ const ScreenCapture: React.FC = () => {
 						alt="Screenshot"
 						className="block w-full h-auto"
 					/>
+				</div>
+			)}
+
+			{/* Display parsed relic */}
+			{currentRelic && (
+				<div className="mt-8 bg-gray-800 p-4 rounded-lg w-full max-w-2xl">
+					<h2 className="text-xl font-bold mb-2">{currentRelic.set}</h2>
+					<div className="flex gap-4 items-center">
+						<img
+							src={`images/${currentRelic.imagePath}`}
+							alt={currentRelic.piece}
+							className="w-24 h-24 object-contain border border-gray-600"
+						/>
+						<div className="text-white">
+							<p>
+								<strong>Piece:</strong> {currentRelic.piece}
+							</p>
+							<p>
+								<strong>Slot:</strong> {currentRelic.slot}
+							</p>
+							<p>
+								<strong>Main Stat:</strong> {currentRelic.mainStat}{" "}
+								{currentRelic.mainValue}
+							</p>
+							<p>
+								<strong>Substats:</strong>{" "}
+								{currentRelic.substats
+									.map((s) => `${s.name} ${s.value}`)
+									.join(", ")}
+							</p>
+						</div>
+					</div>
 				</div>
 			)}
 		</div>

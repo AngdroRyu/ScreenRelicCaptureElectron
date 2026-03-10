@@ -12,18 +12,20 @@ declare global {
 			on: (
 				channel: "CROP_AND_SAVE",
 				listener: (
-					event: IpcRendererEvent,
+					event: Electron.IpcRendererEvent,
 					data: { image: string; rect: Rect }
 				) => void
 			) => void;
 			removeListener: (
 				channel: "CROP_AND_SAVE",
 				listener: (
-					event: IpcRendererEvent,
+					event: Electron.IpcRendererEvent,
 					data: { image: string; rect: Rect }
 				) => void
 			) => void;
 			parseRelicText: (text: string) => Promise<Relic>;
+			openSavedRelics: () => Promise<void>; // opens the window
+			getSavedRelics: () => Promise<Relic[]>; // ← add this
 		};
 	}
 }
