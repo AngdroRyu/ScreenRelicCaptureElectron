@@ -357,8 +357,8 @@
 					"name": "Space Sealing Station",
 					"imagePath": "Item_Space_Sealing_Station.webp",
 					"pieces": {
-						"Link Rope": "",
-						"Planar Sphere": ""
+						"Link Rope": "Herta's Wandering Trek",
+						"Planar Sphere": "Herta's Space Station"
 					}
 				},
 				{
@@ -378,16 +378,16 @@
 					"name": "Talia: Kingdom of Banditry",
 					"imagePath": "Item_Talia_Kingdom_of_Banditry.webp",
 					"pieces": {
-						"Link Rope": "",
-						"Planar Sphere": ""
+						"Link Rope": "Talia's Exposed Electric Wire",
+						"Planar Sphere": "Talia's Nailscrap Town"
 					}
 				},
 				{
 					"name": "Sprightly Vonwacq",
 					"imagePath": "Item_Sprightly_Vonwacq.webp",
 					"pieces": {
-						"Link Rope": "",
-						"Planar Sphere": ""
+						"Link Rope": "Vonwacq's Islandic Coast",
+						"Planar Sphere": "Vonwacq's Island of Birth"
 					}
 				}
 			]
@@ -441,8 +441,8 @@
 					"name": "Rutilant Arena",
 					"imagePath": "Item_Rutilant_Arena.webp",
 					"pieces": {
-						"Link Rope": "",
-						"Planar Sphere": ""
+						"Link Rope": "Taikiyan's Arclight Race Track",
+						"Planar Sphere": "Taikiyan Laser Stadium"
 					}
 				},
 				{
@@ -483,8 +483,8 @@
 					"name": "Sigonia, the Unclaimed Desolation",
 					"imagePath": "Item_Sigonia,_the_Unclaimed_Desolation.webp",
 					"pieces": {
-						"Link Rope": "",
-						"Planar Sphere": ""
+						"Link Rope": "Sigonia's Knot of Cyclicality",
+						"Planar Sphere": "Sigonia's Gaiathra Berth"
 					}
 				},
 				{
@@ -533,8 +533,8 @@
 					"name": "The Wondrous BananAmusment Park",
 					"imagePath": "Item_The_Wondrous_BananAmusement_Park.webp",
 					"pieces": {
-						"Link Rope": "",
-						"Planar Sphere": ""
+						"Link Rope": "BananAmusement Park's Memetic Cables",
+						"Planar Sphere": "BananAmusement Park's BananAxis Plaza"
 					}
 				}
 			]
@@ -554,8 +554,8 @@
 					"name": "Giant Tree of Rapt Brooding",
 					"imagePath": "Item_Giant_Tree_of_Rapt_Brooding.webp",
 					"pieces": {
-						"Link Rope": "",
-						"Planar Sphere": ""
+						"Link Rope": "Grove of Epiphany's Interwoven Veins",
+						"Planar Sphere": "Grove of Epiphany's Pondering Colossus"
 					}
 				}
 			]

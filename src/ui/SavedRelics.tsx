@@ -53,18 +53,40 @@ const SavedRelics: React.FC = () => {
 								<td className="px-4 py-2">{r.slot}</td>
 								<td className="px-4 py-2">{r.mainStat || "-"}</td>
 								<td className="px-4 py-2">{r.mainValue || "-"}</td>
-								<td className="px-4 py-2">
-									{r.substats[0]?.name} {r.substats[0]?.value}
-								</td>
-								<td className="px-4 py-2">
-									{r.substats[1]?.name} {r.substats[1]?.value}
-								</td>
-								<td className="px-4 py-2">
-									{r.substats[2]?.name} {r.substats[2]?.value}
-								</td>
-								<td className="px-4 py-2">
-									{r.substats[3]?.name} {r.substats[3]?.value}
-								</td>
+
+								{r.substats.map((s, i) => (
+									<td key={i} className="px-4 py-2">
+										{s.name && s.value ? (
+											<div className="flex flex-col">
+												<div>
+													{s.name}: {s.value}
+												</div>
+												{s.rolls && (
+													<div className="flex mt-1">
+														{Object.entries(s.rolls.breakdown).map(
+															([tier, count]) =>
+																Array.from({ length: count }).map((_, j) => {
+																	let color = "bg-gray-500"; // low
+																	if (tier === "med") color = "bg-yellow-400";
+																	if (tier === "high") color = "bg-green-400";
+
+																	return (
+																		<span
+																			key={`${tier}-${j}`}
+																			className={`${color} w-2 h-2 rounded-full mr-1 inline-block`}
+																		/>
+																	);
+																})
+														)}
+													</div>
+												)}
+											</div>
+										) : (
+											"-"
+										)}
+									</td>
+								))}
+
 								<td className="px-4 py-2">
 									{r.imagePath ? (
 										<img
@@ -76,17 +98,16 @@ const SavedRelics: React.FC = () => {
 										"-"
 									)}
 								</td>
+
 								<td className="px-4 py-2">
 									<button
 										className="px-2 py-1 bg-red-600 hover:bg-red-500 text-white rounded"
 										onClick={async () => {
 											const success =
 												await window.electron.removeSavedRelic(idx);
-											if (success) {
+											if (success)
 												setRelics((prev) => prev.filter((_, i) => i !== idx));
-											} else {
-												alert("Failed to remove relic.");
-											}
+											else alert("Failed to remove relic.");
 										}}
 									>
 										Remove

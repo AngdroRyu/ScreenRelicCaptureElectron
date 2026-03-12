@@ -783,12 +783,19 @@
     "domain": "Cavern of Corrosion: Path of Hidden Salvation",
     "imagePath": "Item_Self-Enshrouded_Recluse.webp"
   },
-  "": {
-    "name": "",
-    "set": "Giant Tree of Rapt Brooding",
+  "Herta's Wandering Trek": {
+    "name": "Herta's Wandering Trek",
+    "set": "Space Sealing Station",
+    "slot": "Link Rope",
+    "domain": "Divergent Universe: Untoppled Walls",
+    "imagePath": "Item_Space_Sealing_Station.webp"
+  },
+  "Herta's Space Station": {
+    "name": "Herta's Space Station",
+    "set": "Space Sealing Station",
     "slot": "Planar Sphere",
-    "domain": "Divergent Universe: Unceasing Strife",
-    "imagePath": "Item_Giant_Tree_of_Rapt_Brooding.webp"
+    "domain": "Divergent Universe: Untoppled Walls",
+    "imagePath": "Item_Space_Sealing_Station.webp"
   },
   "The Xianzhou Luofu's Ambrosial Arbor Vines": {
     "name": "The Xianzhou Luofu's Ambrosial Arbor Vines",
@@ -803,6 +810,34 @@
     "slot": "Planar Sphere",
     "domain": "Divergent Universe: Untoppled Walls",
     "imagePath": "Item_Fleet_of_the_Ageless.webp"
+  },
+  "Talia's Exposed Electric Wire": {
+    "name": "Talia's Exposed Electric Wire",
+    "set": "Talia: Kingdom of Banditry",
+    "slot": "Link Rope",
+    "domain": "Divergent Universe: Smelted Heart",
+    "imagePath": "Item_Talia_Kingdom_of_Banditry.webp"
+  },
+  "Talia's Nailscrap Town": {
+    "name": "Talia's Nailscrap Town",
+    "set": "Talia: Kingdom of Banditry",
+    "slot": "Planar Sphere",
+    "domain": "Divergent Universe: Smelted Heart",
+    "imagePath": "Item_Talia_Kingdom_of_Banditry.webp"
+  },
+  "Vonwacq's Islandic Coast": {
+    "name": "Vonwacq's Islandic Coast",
+    "set": "Sprightly Vonwacq",
+    "slot": "Link Rope",
+    "domain": "Divergent Universe: Smelted Heart",
+    "imagePath": "Item_Sprightly_Vonwacq.webp"
+  },
+  "Vonwacq's Island of Birth": {
+    "name": "Vonwacq's Island of Birth",
+    "set": "Sprightly Vonwacq",
+    "slot": "Planar Sphere",
+    "domain": "Divergent Universe: Smelted Heart",
+    "imagePath": "Item_Sprightly_Vonwacq.webp"
   },
   "The IPC's Trade Route": {
     "name": "The IPC's Trade Route",
@@ -860,6 +895,20 @@
     "domain": "Divergent Universe: PermaFrost",
     "imagePath": "Item_Inert_Salsotto.webp"
   },
+  "Taikiyan's Arclight Race Track": {
+    "name": "Taikiyan's Arclight Race Track",
+    "set": "Rutilant Arena",
+    "slot": "Link Rope",
+    "domain": "Divergent Universe: Fruit of Evil",
+    "imagePath": "Item_Rutilant_Arena.webp"
+  },
+  "Taikiyan Laser Stadium": {
+    "name": "Taikiyan Laser Stadium",
+    "set": "Rutilant Arena",
+    "slot": "Planar Sphere",
+    "domain": "Divergent Universe: Fruit of Evil",
+    "imagePath": "Item_Rutilant_Arena.webp"
+  },
   "Insumousu's Frayed Hawser": {
     "name": "Insumousu's Frayed Hawser",
     "set": "Broken Keel",
@@ -901,6 +950,20 @@
     "slot": "Planar Sphere",
     "domain": "Divergent Universe: Pouring Blades",
     "imagePath": "Item_Penacony,_Land_of_the_Dreams.webp"
+  },
+  "Sigonia's Knot of Cyclicality": {
+    "name": "Sigonia's Knot of Cyclicality",
+    "set": "Sigonia, the Unclaimed Desolation",
+    "slot": "Link Rope",
+    "domain": "Divergent Universe: To Sweet Dreams",
+    "imagePath": "Item_Sigonia,_the_Unclaimed_Desolation.webp"
+  },
+  "Sigonia's Gaiathra Berth": {
+    "name": "Sigonia's Gaiathra Berth",
+    "set": "Sigonia, the Unclaimed Desolation",
+    "slot": "Planar Sphere",
+    "domain": "Divergent Universe: To Sweet Dreams",
+    "imagePath": "Item_Sigonia,_the_Unclaimed_Desolation.webp"
   },
   "Izumo's Blades of Origin and Ending": {
     "name": "Izumo's Blades of Origin and Ending",
@@ -958,6 +1021,20 @@
     "domain": "Divergent Universe: Famished Worker",
     "imagePath": "Item_Lushaka,_the_Sunken_Seas.webp"
   },
+  "BananAmusement Park's Memetic Cables": {
+    "name": "BananAmusement Park's Memetic Cables",
+    "set": "The Wondrous BananAmusment Park",
+    "slot": "Link Rope",
+    "domain": "Divergent Universe: Famished Worker",
+    "imagePath": "Item_The_Wondrous_BananAmusement_Park.webp"
+  },
+  "BananAmusement Park's BananAxis Plaza": {
+    "name": "BananAmusement Park's BananAxis Plaza",
+    "set": "The Wondrous BananAmusment Park",
+    "slot": "Planar Sphere",
+    "domain": "Divergent Universe: Famished Worker",
+    "imagePath": "Item_The_Wondrous_BananAmusement_Park.webp"
+  },
   "Aidonia's Deathward Bone Chains": {
     "name": "Aidonia's Deathward Bone Chains",
     "set": "Bone Collection's Serene Demesne",
@@ -971,6 +1048,20 @@
     "slot": "Planar Sphere",
     "domain": "Divergent Universe: Unceasing Strife",
     "imagePath": "Item_Bone_Collection's_Serene_Demesne.webp"
+  },
+  "Grove of Epiphany's Interwoven Veins": {
+    "name": "Grove of Epiphany's Interwoven Veins",
+    "set": "Giant Tree of Rapt Brooding",
+    "slot": "Link Rope",
+    "domain": "Divergent Universe: Unceasing Strife",
+    "imagePath": "Item_Giant_Tree_of_Rapt_Brooding.webp"
+  },
+  "Grove of Epiphany's Pondering Colossus": {
+    "name": "Grove of Epiphany's Pondering Colossus",
+    "set": "Giant Tree of Rapt Brooding",
+    "slot": "Planar Sphere",
+    "domain": "Divergent Universe: Unceasing Strife",
+    "imagePath": "Item_Giant_Tree_of_Rapt_Brooding.webp"
   },
   "Membrance Maze's Wishing Whistle": {
     "name": "Membrance Maze's Wishing Whistle",

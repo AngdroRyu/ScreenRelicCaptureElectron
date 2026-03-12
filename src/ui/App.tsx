@@ -99,9 +99,29 @@ const ScreenCapture: React.FC = () => {
 							</p>
 							<p>
 								<strong>Substats:</strong>{" "}
-								{currentRelic.substats
-									.map((s) => `${s.name} ${s.value}`)
-									.join(", ")}
+								{currentRelic.substats.map((s, idx) => {
+									return (
+										<span key={idx} className="inline-flex items-center mr-2">
+											{s.name} {s.value}
+											{/* Roll dots */}
+											{s.rolls &&
+												Object.entries(s.rolls.breakdown).map(([tier, count]) =>
+													Array.from({ length: count }).map((_, i) => {
+														let color = "bg-gray-500"; // default low
+														if (tier === "med") color = "bg-yellow-400";
+														if (tier === "high") color = "bg-green-400";
+
+														return (
+															<span
+																key={`${tier}-${i}`}
+																className={`${color} w-2 h-2 rounded-full ml-1 inline-block`}
+															/>
+														);
+													})
+												)}
+										</span>
+									);
+								})}
 							</p>
 						</div>
 					</div>

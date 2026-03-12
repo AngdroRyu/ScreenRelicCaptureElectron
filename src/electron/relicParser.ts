@@ -16,7 +16,7 @@ export interface Relic {
 	slot: string;
 	mainStat: string | null;
 	mainValue: string | null;
-	substats: { name: string; value: string }[];
+	substats: RelicSubstat[];
 	imagePath?: string;
 }
 
@@ -26,6 +26,16 @@ interface RelicLookupEntry {
 	slot: string;
 	domain: string;
 	imagePath: string;
+}
+
+// --- Extend Relic type to include rolls ---
+export interface RelicSubstat {
+	name: string;
+	value: string;
+	rolls?: {
+		totalRolls: number;
+		breakdown: { low: number; med: number; high: number };
+	};
 }
 
 // --- Load relic lookup ---
@@ -42,16 +52,13 @@ try {
 	console.error("Failed to load relicLookup.json:", err);
 }
 
-// --- Text normalization for OCR reliability ---
+// --- Text normalization ---
 function normalize(text: string) {
 	const normalized = text
 		.toLowerCase()
-		.replace(/[']/g, "")
 		.replace(/[^\w\s]/g, "")
 		.trim();
-
 	console.log("Normalized OCR text:", normalized);
-
 	return normalized;
 }
 
@@ -61,18 +68,14 @@ function findRelicFromLookup(
 ): { key: string; relic: RelicLookupEntry } | null {
 	console.log("Searching relic in OCR text...");
 	const normalizedText = normalize(text);
-	console.log(normalizedText);
 	for (const key in relicLookup) {
 		const normalizedKey = normalize(key);
-
-		console.log("Checking relic key:", normalizedKey);
-
+		//console.log("Checking relic key:", normalizedKey);
 		if (normalizedText.includes(normalizedKey)) {
 			console.log("MATCHED RELIC:", key);
 			return { key, relic: relicLookup[key] };
 		}
 	}
-
 	console.warn("No relic match found in OCR text.");
 	return null;
 }
@@ -83,16 +86,13 @@ export function parseRelicFromText(text: string): Relic | null {
 	console.log("OCR TEXT RECEIVED:\n", text);
 
 	const relicMatch = findRelicFromLookup(text);
-	console.log(relicMatch);
 	if (!relicMatch) {
 		console.warn("Parser could not find relic.");
 		return null;
 	}
 
 	const { key, relic } = relicMatch;
-
-	console.log("Relic detected:", key);
-	console.log("Relic slot:", relic.slot);
+	console.log("Relic detected:", key, relic);
 
 	const mainStatData = detectMainStat(text, relic.slot);
 	console.log("Main stat detected:", mainStatData);
@@ -100,7 +100,6 @@ export function parseRelicFromText(text: string): Relic | null {
 	const substats = detectSubstats(mainStatData?.remainingText || text);
 	console.log("Substats detected:", substats);
 
-	// --- Build parsed relic ---
 	const parsedRelic: Relic = {
 		set: relic.set,
 		piece: relic.name || key || "Unknown",
@@ -108,11 +107,48 @@ export function parseRelicFromText(text: string): Relic | null {
 		mainStat: mainStatData?.name || null,
 		mainValue: mainStatData?.value || null,
 		substats,
-		// Use relic.imagePath if present; otherwise fallback to set-based image
 		imagePath: relic.imagePath
 			? `/${relic.imagePath}`
 			: `/Item_${relic.set.replace(/[^a-zA-Z0-9]/g, "_")}.webp`
 	};
+
+	// --- Detect rolls for each substat ---
+	parsedRelic.substats.forEach((s) => {
+		if (s.name && s.value) {
+			let numericValue = parseFloat(s.value.replace("%", ""));
+			let tableKey = s.name;
+
+			if (s.value.includes("%")) {
+				// Only append % for DEF, ATK, HP
+				if (["DEF", "ATK", "HP"].includes(s.name)) {
+					tableKey = s.name + "%";
+					numericValue /= 100; // convert to fraction
+				}
+			}
+
+			// Convert special fractional stats if >1
+			if (
+				[
+					"Break Effect",
+					"Effect Hit Rate",
+					"Effect RES",
+					"CRIT Rate",
+					"CRIT DMG"
+				].includes(s.name) &&
+				numericValue > 1
+			) {
+				numericValue /= 100;
+			}
+
+			const rolls = detectSubstatRolls(tableKey, numericValue);
+			s.rolls = rolls || undefined;
+
+			console.log(
+				`Substat ${s.name} value ${s.value} → tableKey ${tableKey} → numeric ${numericValue} → rolls:`,
+				rolls
+			);
+		}
+	});
 
 	console.log("FINAL PARSED RELIC:", parsedRelic);
 	console.log("========== PARSE RELIC END ==========");
@@ -123,10 +159,8 @@ export function parseRelicFromText(text: string): Relic | null {
 // --- Detect main stat ---
 function detectMainStat(text: string, slot: string) {
 	console.log("Detecting main stat for slot:", slot);
-
 	const possibleStats = mainStatsBySlot[slot] || [];
 	const lines = text.split(/\r?\n/);
-
 	let remainingText = text;
 
 	for (const rawLine of lines) {
@@ -134,93 +168,136 @@ function detectMainStat(text: string, slot: string) {
 			.replace(/[^\w\d.+% ]/g, "")
 			.trim()
 			.toLowerCase();
-
 		if (!line) continue;
 
 		console.log("Checking line for main stat:", line);
 
 		for (const stat of possibleStats) {
 			const statLower = stat.toLowerCase();
-
 			if (line.includes(statLower)) {
-				console.log("Potential main stat match:", stat);
-
 				const regex = new RegExp(`${statLower}\\s*([\\d.]+%?)`);
 				const match = line.match(regex);
-
 				if (match) {
 					console.log("Main stat value detected:", match[1]);
-
 					const escapedLine = rawLine.replace(/[-/\\^$*+?.()|[\]{}]/g, "\\$&");
-
 					const removeRegex = new RegExp(escapedLine, "g");
-
 					remainingText = remainingText.replace(removeRegex, "").trim();
-
-					console.log("Remaining text after removing main stat:");
-					console.log(remainingText);
-
-					return {
-						name: stat,
-						value: match[1],
-						remainingText
-					};
+					return { name: stat, value: match[1], remainingText };
 				}
 			}
 		}
 	}
-
 	console.warn("No main stat detected.");
-
 	return { name: null, value: null, remainingText: text };
 }
 
 // --- Detect substats ---
 function detectSubstats(text: string) {
 	console.log("Detecting substats...");
-
 	if (text.includes("(+3 to activate)")) {
-		console.log("Removing (+3 to activate)");
 		text = text.replace(/\(\+3 to activate\)/g, "").trim();
+		console.log("Removed (+3 to activate)");
 	}
 
-	const found: { name: string; value: string }[] = [];
+	const found: RelicSubstat[] = [];
 	const lines = text.split(/\r?\n/);
-
-	console.log("Lines for substat scan:", lines);
-
 	for (const rawLine of lines) {
 		const line = rawLine
 			.replace(/^[^\w\d.+%]+/, "")
 			.trim()
 			.toLowerCase();
-
 		if (!line) continue;
-
-		console.log("Checking line:", line);
 
 		for (const stat of substatNames) {
 			const regex = new RegExp(`${stat.toLowerCase()}[^\\d]*([\\d\\.]+%?)`);
 			const match = line.match(regex);
-
 			if (match) {
 				console.log(`Substat found: ${stat} ${match[1]}`);
-
-				found.push({
-					name: stat,
-					value: match[1]
-				});
+				found.push({ name: stat, value: match[1] });
 			}
 		}
 	}
 
-	console.log("Substats before padding:", found);
+	while (found.length < 4) found.push({ name: "", value: "" });
+	console.log("Final substats:", found);
+	return found;
+}
 
-	while (found.length < 4) {
-		found.push({ name: "", value: "" });
+// --- Substat growth table ---
+interface SubstatGrowth {
+	stat: string;
+	values: { low: number; med: number; high: number };
+}
+
+const SubstatGrowthValues: SubstatGrowth[] = [
+	{ stat: "SPD", values: { low: 2, med: 2.3, high: 2.6 } },
+	{ stat: "HP", values: { low: 33.87, med: 38.103755, high: 42.33751 } },
+	{ stat: "ATK", values: { low: 16.935, med: 19.051877, high: 21.168754 } },
+	{ stat: "DEF", values: { low: 16.935, med: 19.051877, high: 21.168754 } },
+	{ stat: "HP%", values: { low: 0.03456, med: 0.03888, high: 0.0432 } },
+	{ stat: "ATK%", values: { low: 0.03456, med: 0.03888, high: 0.0432 } },
+	{ stat: "DEF%", values: { low: 0.0432, med: 0.0486, high: 0.054 } },
+	{
+		stat: "Break Effect",
+		values: { low: 0.05184, med: 0.05832, high: 0.0648 }
+	},
+	{
+		stat: "Effect Hit Rate",
+		values: { low: 0.03456, med: 0.03888, high: 0.0432 }
+	},
+	{ stat: "Effect RES", values: { low: 0.03456, med: 0.03888, high: 0.0432 } },
+	{ stat: "CRIT Rate", values: { low: 0.02592, med: 0.02916, high: 0.0324 } },
+	{ stat: "CRIT DMG", values: { low: 0.05184, med: 0.05832, high: 0.0648 } }
+];
+
+// --- Build lookup table ---
+const rollTable: Record<string, [number, number, number]> = Object.fromEntries(
+	SubstatGrowthValues.map((r) => [
+		r.stat,
+		[r.values.low, r.values.med, r.values.high] as [number, number, number]
+	])
+);
+
+// --- Substat roll calculator ---
+export function detectSubstatRolls(
+	stat: string,
+	observedValue: number,
+	maxRolls = 5
+) {
+	const tableStat = stat;
+	const values = rollTable[tableStat];
+	if (!values) {
+		console.warn(`No roll table entry for ${stat}`);
+		return null;
 	}
 
-	console.log("Final substats:", found);
+	const [low, med, high] = values;
+	const tolerance =
+		tableStat.endsWith("%") || tableStat.includes("Effect") ? 0.001 : 1;
 
-	return found;
+	let best: {
+		totalRolls: number;
+		breakdown: { low: number; med: number; high: number };
+	} | null = null;
+	let bestDiff = Infinity;
+
+	for (let a = 0; a <= maxRolls; a++) {
+		for (let b = 0; b <= maxRolls - a; b++) {
+			for (let c = 0; c <= maxRolls - a - b; c++) {
+				const rolls = a + b + c;
+				if (!rolls) continue;
+
+				const sum = a * low + b * med + c * high;
+				const diff = Math.abs(sum - observedValue);
+
+				if (diff < bestDiff && diff <= tolerance) {
+					bestDiff = diff;
+					best = { totalRolls: rolls, breakdown: { low: a, med: b, high: c } };
+				}
+			}
+		}
+	}
+
+	console.log(`detectSubstatRolls(${stat}, ${observedValue}) →`, best);
+	return best;
 }
