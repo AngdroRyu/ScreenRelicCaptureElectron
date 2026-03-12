@@ -56,9 +56,13 @@ try {
 function normalize(text: string) {
 	const normalized = text
 		.toLowerCase()
-		.replace(/[^\w\s]/g, "")
+		// remove parentheses and contents, e.g., (0)
+		.replace(/\([^)]*\)/g, "")
+		// replace non-word characters (punctuation) with space
+		.replace(/[^\w\s]+/g, " ")
+		// collapse multiple spaces/newlines into single space
+		.replace(/\s+/g, " ")
 		.trim();
-	console.log("Normalized OCR text:", normalized);
 	return normalized;
 }
 
@@ -67,6 +71,7 @@ function findRelicFromLookup(
 	text: string
 ): { key: string; relic: RelicLookupEntry } | null {
 	console.log("Searching relic in OCR text...");
+	console.log(text);
 	const normalizedText = normalize(text);
 	for (const key in relicLookup) {
 		const normalizedKey = normalize(key);
@@ -218,7 +223,13 @@ function detectSubstats(text: string) {
 		}
 	}
 
-	while (found.length < 4) found.push({ name: "", value: "" });
+	// Throw an error if less than 4 substats were found
+	if (found.length !== 4) {
+		throw new Error(
+			`Expected 4 substats, but found ${found.length}: ${JSON.stringify(found)}`
+		);
+	}
+
 	console.log("Final substats:", found);
 	return found;
 }
@@ -267,8 +278,7 @@ export function detectSubstatRolls(
 	const tableStat = stat;
 	const values = rollTable[tableStat];
 	if (!values) {
-		console.warn(`No roll table entry for ${stat}`);
-		return null;
+		throw new Error(`No roll table entry for ${stat}`);
 	}
 
 	const [low, med, high] = values;
@@ -296,6 +306,12 @@ export function detectSubstatRolls(
 				}
 			}
 		}
+	}
+
+	if (!best) {
+		throw new Error(
+			`Unable to detect substat rolls for ${stat} with observed value ${observedValue}`
+		);
 	}
 
 	console.log(`detectSubstatRolls(${stat}, ${observedValue}) →`, best);

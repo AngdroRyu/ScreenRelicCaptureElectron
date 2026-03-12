@@ -310,7 +310,7 @@
 						"Head": "Hero's Wreath of Championship",
 						"Body": "Hero's Gallant Golden Armor",
 						"Hand": "Hero's Gilded Bracers",
-						"Feet": "Hero's Firechasing Shinguards"
+						"Feet": "Hero's Firechasing Shinguard"
 					}
 				},
 				{
@@ -420,7 +420,7 @@
 					"name": "Belobog of the Architects",
 					"imagePath": "Item_Belobog_of_the_Architects.webp",
 					"pieces": {
-						"Link Rope": "Belobog's Iron Defenses",
+						"Link Rope": "Belobog's Iron Defense",
 						"Planar Sphere": "Belobog's Fortress of Preservation"
 					}
 				},

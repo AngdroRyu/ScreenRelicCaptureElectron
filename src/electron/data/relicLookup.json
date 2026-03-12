@@ -692,8 +692,8 @@
     "domain": "Cavern of Corrosion: Path of Aria",
     "imagePath": "Item_Hero_of_Triumphant_Song.webp"
   },
-  "Hero's Firechasing Shinguards": {
-    "name": "Hero's Firechasing Shinguards",
+  "Hero's Firechasing Shinguard": {
+    "name": "Hero's Firechasing Shinguard",
     "set": "Hero of Triumphant Song",
     "slot": "Feet",
     "domain": "Cavern of Corrosion: Path of Aria",
@@ -867,8 +867,8 @@
     "domain": "Divergent Universe: Gentle Words",
     "imagePath": "Item_Celestial_Differentiator.webp"
   },
-  "Belobog's Iron Defenses": {
-    "name": "Belobog's Iron Defenses",
+  "Belobog's Iron Defense": {
+    "name": "Belobog's Iron Defense",
     "set": "Belobog of the Architects",
     "slot": "Link Rope",
     "domain": "Divergent Universe: PermaFrost",
