@@ -1,631 +1,631 @@
 {
-  "domains": [
-    {
-      "name": "Cavern of Corrosion: Path of Thundersurge",
-      "sets": [
-        {
-          "name": "Wavestrider Captain",
-          "imagePath": "Item_Wavestrider_Captain.webp",
-          "pieces": {
-            "Head": "Captain's Navigator Hat",
-            "Body": "Captain's Wind Mantle",
-            "Hand": "Captain's Lightcatcher Astrolabe",
-            "Feet": "Captain's Tidal Boots"
-          }
-        },
-        {
-          "name": "Warrior Goddess of Sun and Thunder",
-          "imagePath": "Item_Warrior_Goddess_of_Sun_and_Thunder.webp",
-          "pieces": {
-            "Head": "Warrior Goddess's Winged Helmet",
-            "Body": "Warrior Goddess's Dawn Cape",
-            "Hand": "Warrior Goddess's Cavalry Gauntlets",
-            "Feet": "Warrior Goddess's Honor Spurs"
-          }
-        }
-      ]
-    },
-    {
-      "name": "Cavern of Corrosion: Path of Gelid Wind",
-      "sets": [
-        {
-          "name": "Hunter of Glacial Forest",
-          "imagePath": "Item_Hunter_of_Glacial_Forest.webp",
-          "pieces": {
-            "Head": "Hunter's Artaius Hood",
-            "Body": "Hunter's Ice Dragon Cloak",
-            "Hand": "Hunter's Lizard Gloves",
-            "Feet": "Hunter's Soft Elkskin Boots"
-          }
-        },
-        {
-          "name": "Eagle of Twilight Line",
-          "imagePath": "Item_Eagle_of_Twilight_Line.webp",
-          "pieces": {
-            "Head": "Eagle's Beaked Helmet",
-            "Body": "Eagle's Winged Suit Harness",
-            "Hand": "Eagle's Soaring Rings",
-            "Feet": "Eagle's Quilted Puttees"
-          }
-        }
-      ]
-    },
-    {
-      "name": "Cavern of Corrosion: Path of Jabbing Punch",
-      "sets": [
-        {
-          "name": "Champion of Streetwise Boxing",
-          "imagePath": "Item_Champion_of_Streetwise_Boxing.webp",
-          "pieces": {
-            "Head": "Champion's Headgear",
-            "Body": "Champion's Chest Guard",
-            "Hand": "Champion's Heavy Gloves",
-            "Feet": "Champion's Fleetfoot Boots"
-          }
-        },
-        {
-          "name": "Thief of Shooting Meteor",
-          "imagePath": "Item_Thief_of_Shooting_Meteor.webp",
-          "pieces": {
-            "Head": "Thief's Myriad-Faced Mask",
-            "Body": "Thief's Steel Grappling Hook Vest",
-            "Hand": "Thief's Gloves With Prints",
-            "Feet": "Thief's Meteor Boots"
-          }
-        }
-      ]
-    },
-    {
-      "name": "Cavern of Corrosion: Path of Drifting",
-      "sets": [
-        {
-          "name": "Passerby of Wandering Cloud",
-          "imagePath": "Item_Passerby_of_Wandering_Cloud.webp",
-          "pieces": {
-            "Head": "Passerby's Rejuvenated Wooden Hairstick",
-            "Body": "Passerby's Ragged Embroided Coat",
-            "Hand": "Passerby's Roaming Dragon Bracers",
-            "Feet": "Passerby's Stygian Hiking Boots"
-          }
-        },
-        {
-          "name": "Musketeer of Wild Wheat",
-          "imagePath": "Item_Musketeer_of_Wild_Wheat.webp",
-          "pieces": {
-            "Head": "Musketeer's Wild Wheat Felt Hat",
-            "Body": "Musketeer's Wind-Hunting Shawl",
-            "Hand": "Musketeer's Coarse Leather Gloves",
-            "Feet": "Musketeer's Rivets Riding Boots"
-          }
-        }
-      ]
-    },
-    {
-      "name": "Cavern of Corrosion: Path of Providence",
-      "sets": [
-        {
-          "name": "Guard of Wuthering Snow",
-          "imagePath": "Item_Guard_of_Wuthering_Snow.webp",
-          "pieces": {
-            "Head": "Guard's Cast Iron Helmet",
-            "Body": "Guard's Uniform of Olden Times",
-            "Hand": "Guard's Shining Gauntlets",
-            "Feet": "Guard's Silver Greaves"
-          }
-        },
-        {
-          "name": "Genius of Brilliant Stars",
-          "imagePath": "Item_Genius_of_Brilliant_Stars.webp",
-          "pieces": {
-            "Head": "Genius's Ultraremote Sensing Visor",
-            "Body": "Genius's Metafield Suit",
-            "Hand": "Genius's Frequency Catcher",
-            "Feet": "Genius's Gravity Walker Boots"
-          }
-        }
-      ]
-    },
-    {
-      "name": "Cavern of Corrosion: Path of Holy Hymn",
-      "sets": [
-        {
-          "name": "Knight of Purity Palace",
-          "imagePath": "Item_Knight_of_Purity_Palace.webp",
-          "pieces": {
-            "Head": "Knight's Forgiving Casque",
-            "Body": "Knight's Solemn Breastplate",
-            "Hand": "Knight's Silent Oath Rings",
-            "Feet": "Knight's Iron Boots of Order"
-          }
-        },
-        {
-          "name": "Band of Sizzling Thunder",
-          "imagePath": "Item_Band_of_Sizzling_Thunder.webp",
-          "pieces": {
-            "Head": "Band's Polarized Sunglasses",
-            "Body": "Band's Leather Jacket With Studs",
-            "Hand": "Band's Touring Bracelet",
-            "Feet": "Band's Ankle Boots With Rivets"
-          }
-        }
-      ]
-    },
-    {
-      "name": "Cavern of Corrosion: Path of Conflagration",
-      "sets": [
-        {
-          "name": "Firesmith of Lava-Forging",
-          "imagePath": "Item_Firesmith_of_Lava-Forging.webp",
-          "pieces": {
-            "Head": "Firesmith's Obsidian Goggles",
-            "Body": "Firesmith's Fireproof Apron",
-            "Hand": "Firesmith's Ring of Flame-Mastery",
-            "Feet": "Firesmith's Alloy Leggings"
-          }
-        },
-        {
-          "name": "Wastelander of Banditry Desert",
-          "imagePath": "Item_Wastelander_of_Banditry_Desert.webp",
-          "pieces": {
-            "Head": "Wastelander's Breathing Mask",
-            "Body": "Wastelander's Friar Robe",
-            "Hand": "Wastelander's Desert Terminal",
-            "Feet": "Wastelander's Powered Greaves"
-          }
-        }
-      ]
-    },
-    {
-      "name": "Cavern of Corrosion: Path of Elixir Seekers",
-      "sets": [
-        {
-          "name": "Longevous Desciple",
-          "imagePath": "Item_Longevous_Disciple.webp",
-          "pieces": {
-            "Head": "Disciple's Prosthetic Eye",
-            "Body": "Disciple's Dewy Feather Garb",
-            "Hand": "Disciple's Ingenium Hand",
-            "Feet": "Disciple's Celestial Silk Sandals"
-          }
-        },
-        {
-          "name": "Messenger Traversing Hackerspace",
-          "imagePath": "Item_Messenger_Traversing_Hackerspace.webp",
-          "pieces": {
-            "Head": "Messenger's Holovisor",
-            "Body": "Messenger's Secret Satchel",
-            "Hand": "Messenger's Transformative Arm",
-            "Feet": "Messenger's Par-kool Sneakers"
-          }
-        }
-      ]
-    },
-    {
-      "name": "Cavern of Corrosion: Path of Darkness",
-      "sets": [
-        {
-          "name": "The Ashblazing Grand Duke",
-          "imagePath": "Item_The_Ashblazing_Grand_Duke.webp",
-          "pieces": {
-            "Head": "Grand Duke's Crown of Netherflame",
-            "Body": "Grand Duke's Robe of Grace",
-            "Hand": "Grand Duke's Gloves of Fieryfury",
-            "Feet": "Grand Duke's Ceremonial Boots"
-          }
-        },
-        {
-          "name": "Prisoner in Deep Confinement",
-          "imagePath": "Item_Prisoner_in_Deep_Confinement.webp",
-          "pieces": {
-            "Head": "Prisoner's Sealed Muzzle",
-            "Body": "Prisoner's Repressive Straitjacket",
-            "Hand": "Prisoner's Leadstone Shackles",
-            "Feet": "Prisoner's Restrictive Fetters"
-          }
-        }
-      ]
-    },
-    {
-      "name": "Cavern of Corrosion: Path of Dreamdive",
-      "sets": [
-        {
-          "name": "Pioneer Diver of Dead Waters",
-          "imagePath": "Item_Pioneer_Diver_of_Dead_Waters.webp",
-          "pieces": {
-            "Head": "Pioneer's Heatproof Shell Helmet",
-            "Body": "Pioneer's Sealed Lead Apron",
-            "Hand": "Pioneer's Lacuna Compass Wristband",
-            "Feet": "Pioneer's Starfaring Anchor Boots"
-          }
-        },
-        {
-          "name": "Watchmaker of Master of Dream Machinations",
-          "imagePath": "Item_Watchmaker,_Master_of_Dream_Machinations.webp",
-          "pieces": {
-            "Head": "Watchmaker's Telescoping Lens",
-            "Body": "Watchmaker's Illusory Formal Suit",
-            "Hand": "Watchmaker's Fortuitous Wristwatch",
-            "Feet": "Watchmaker's Dream-Concealing Dress Shoes"
-          }
-        }
-      ]
-    },
-    {
-      "name": "Cavern of Corrosion: Path of Cavalier",
-      "sets": [
-        {
-          "name": "Iron Cavalry Against the Scourge",
-          "imagePath": "Item_Iron_Cavalry_Against_the_Scourge.webp",
-          "pieces": {
-            "Head": "Iron Cavalry's Homing Helm",
-            "Body": "Iron Cavalry's Silvery Armor",
-            "Hand": "Iron Cavalry's Crushing Wristguards",
-            "Feet": "Iron Cavalry's Skywalk Greaves"
-          }
-        },
-        {
-          "name": "The Wind-Soaring Valorous",
-          "imagePath": "Item_The_Wind-Soaring_Valorous.webp",
-          "pieces": {
-            "Head": "Valorous Mask of Northern Skies",
-            "Body": "Valorous Plate of Soaring Flight",
-            "Hand": "Valorous Bracelet of Grappling Hooks",
-            "Feet": "Valorous Greaves of Pursuing Hunt"
-          }
-        }
-      ]
-    },
-    {
-      "name": "Cavern of Corrosion: Path of Uncertainty",
-      "sets": [
-        {
-          "name": "Scholar Lost in Erudition",
-          "imagePath": "Item_Scholar_Lost_in_Erudition.webp",
-          "pieces": {
-            "Head": "Scholar's Silver-Rimmed Monocle",
-            "Body": "Scholar's Tweed Jacket",
-            "Hand": "Scholar's Auxiliary Knuckle",
-            "Feet": "Scholar's Felt Snowboots"
-          }
-        },
-        {
-          "name": "Sacerdos' Relived Ordeal",
-          "imagePath": "Item_Sacerdos'_Relived_Ordeal.webp",
-          "pieces": {
-            "Head": "Sacerdos' Melodic Earrings",
-            "Body": "Sacerdos' Ceremonial Garb",
-            "Hand": "Sacerdos' Welcoming Gloves",
-            "Feet": "Sacerdos' Arduous Boots"
-          }
-        }
-      ]
-    },
-    {
-      "name": "Cavern of Corrosion: Path of Aria",
-      "sets": [
-        {
-          "name": "Hero of Triumphant Song",
-          "imagePath": "Item_Hero_of_Triumphant_Song.webp",
-          "pieces": {
-            "Head": "Hero's Wreath of Championship",
-            "Body": "Hero's Gallant Golden Armor",
-            "Hand": "Hero's Gilded Bracers",
-            "Feet": "Hero's Firechasing Shinguards"
-          }
-        },
-        {
-          "name": "Poet of Mourning Collapse",
-          "imagePath": "Item_Poet_of_Mourning_Collapse.webp",
-          "pieces": {
-            "Head": "Poet's Dill Wreath",
-            "Body": "Poet's Star-Studded Skirt",
-            "Hand": "Poet's Gilded Bracelets",
-            "Feet": "Poet's Silver-Studded Shoes"
-          }
-        }
-      ]
-    },
-    {
-      "name": "Cavern of Corrosion: Path of Hidden Salvation",
-      "sets": [
-        {
-          "name": "World-Remaking Deliverer",
-          "imagePath": "Item_World-Remaking_Deliverer.webp",
-          "pieces": {
-            "Head": "Deliverer's Hood of Creation",
-            "Body": "Deliverer's Robe of Legacy",
-            "Hand": "Deliverer's Sword Gauntlets",
-            "Feet": "Deliverer's Boots of Pioneering"
-          }
-        },
-        {
-          "name": "Self-Enshrouded Recluse",
-          "imagePath": "Item_Self-Enshrouded_Recluse.webp",
-          "pieces": {
-            "Head": "Recluse's Wide-Brimmed Fedora",
-            "Body": "Recluse's Camel-Colored Coat",
-            "Hand": "Recluse's Refined Timepiece",
-            "Feet": "Recluse's Soft Suede Boots"
-          }
-        }
-      ]
-    },
-    {
-      "name": "Divergent Universe: Untoppled Walls",
-      "sets": [
-        {
-          "name": "Space Sealing Station",
-          "imagePath": "Item_Space_Sealing_Station.webp",
-          "pieces": {
-            "Link Rope": "",
-            "Planar Sphere": ""
-          }
-        },
-        {
-          "name": "Fleet of the Ageless",
-          "imagePath": "Item_Fleet_of_the_Ageless.webp",
-          "pieces": {
-            "Link Rope": "The Xianzhou Luofu's Ambrosial Arbor Vines",
-            "Planar Sphere": "The Xianzhou Luofu's Celestial Ark"
-          }
-        }
-      ]
-    },
-    {
-      "name": "Divergent Universe: Smelted Heart",
-      "sets": [
-        {
-          "name": "Talia: Kingdom of Banditry",
-          "imagePath": "Item_Talia_Kingdom_of_Banditry.webp",
-          "pieces": {
-            "Link Rope": "",
-            "Planar Sphere": ""
-          }
-        },
-        {
-          "name": "Sprightly Vonwacq",
-          "imagePath": "Item_Sprightly_Vonwacq.webp",
-          "pieces": {
-            "Link Rope": "",
-            "Planar Sphere": ""
-          }
-        }
-      ]
-    },
-    {
-      "name": "Divergent Universe: Gentle Words",
-      "sets": [
-        {
-          "name": "Pan-Cosmic Commercial Enterprise",
-          "imagePath": "Item_Pan-Cosmic_Commercial_Enterprise.webp",
-          "pieces": {
-            "Link Rope": "The IPC's Trade Route",
-            "Planar Sphere": "The IPC's Mega HQ"
-          }
-        },
-        {
-          "name": "Celestial Differentiator",
-          "imagePath": "Item_Celestial_Differentiator.webp",
-          "pieces": {
-            "Link Rope": "Planet Screwllum's Ring System",
-            "Planar Sphere": "Planet Screwllum's Mechanical Sundial"
-          }
-        }
-      ]
-    },
-    {
-      "name": "Divergent Universe: PermaFrost",
-      "sets": [
-        {
-          "name": "Belobog of the Architects",
-          "imagePath": "Item_Belobog_of_the_Architects.webp",
-          "pieces": {
-            "Link Rope": "Belobog's Iron Defenses",
-            "Planar Sphere": "Belobog's Fortress of Preservation"
-          }
-        },
-        {
-          "name": "Inert Salsotto",
-          "imagePath": "Item_Inert_Salsotto.webp",
-          "pieces": {
-            "Link Rope": "Salsotto's Terminator Line",
-            "Planar Sphere": "Salsotto's Moving Cityscape"
-          }
-        }
-      ]
-    },
-    {
-      "name": "Divergent Universe: Fruit of Evil",
-      "sets": [
-        {
-          "name": "Rutilant Arena",
-          "imagePath": "Item_Rutilant_Arena.webp",
-          "pieces": {
-            "Link Rope": "",
-            "Planar Sphere": ""
-          }
-        },
-        {
-          "name": "Broken Keel",
-          "imagePath": "Item_Broken_Keel.webp",
-          "pieces": {
-            "Link Rope": "Insumousu's Frayed Hawser",
-            "Planar Sphere": "Insumousu's Whalefall Ship"
-          }
-        }
-      ]
-    },
-    {
-      "name": "Divergent Universe: Pouring Blades",
-      "sets": [
-        {
-          "name": "Firmament Frontiline: Glamoth",
-          "imagePath": "Item_Firmament_Frontline_Glamoth.webp",
-          "pieces": {
-            "Link Rope": "Glamoth's Silent Tombstones",
-            "Planar Sphere": "Glamoth's Iron Cavalry Regiment"
-          }
-        },
-        {
-          "name": "Penacony, Land of Dreams",
-          "imagePath": "Item_Penacony,_Land_of_the_Dreams.webp",
-          "pieces": {
-            "Link Rope": "Penacony's Dream-Seeking Tracks",
-            "Planar Sphere": "Penacony's Grand Hotel"
-          }
-        }
-      ]
-    },
-    {
-      "name": "Divergent Universe: To Sweet Dreams",
-      "sets": [
-        {
-          "name": "Sigonia, the Unclaimed Desolation",
-          "imagePath": "Item_Sigonia,_the_Unclaimed_Desolation.webp",
-          "pieces": {
-            "Link Rope": "",
-            "Planar Sphere": ""
-          }
-        },
-        {
-          "name": "Izumo Gensei and Takama Divine Realm",
-          "imagePath": "Item_Izumo_Gensei_and_Takama_Divine_Realm.webp",
-          "pieces": {
-            "Link Rope": "Izumo's Blades of Origin and Ending",
-            "Planar Sphere": "Izumo's Magatsu no Morokami"
-          }
-        }
-      ]
-    },
-    {
-      "name": "Divergent Universe: Eternal Comedy",
-      "sets": [
-        {
-          "name": "Duran, Dynasty of Running Wolves",
-          "imagePath": "Item_Duran,_Dynasty_of_Running_Wolves.webp",
-          "pieces": {
-            "Link Rope": "Duran's Mechabeast Bridle",
-            "Planar Sphere": "Duran's Tent of Golden Skys"
-          }
-        },
-        {
-          "name": "Forge of the Kalkpagni Lantern",
-          "imagePath": "Item_Forge_of_the_Kalpagni_Lantern.webp",
-          "pieces": {
-            "Link Rope": "Forge's Heavenly Flamewheel Silk",
-            "Planar Sphere": "Forge's Lotus Lantern Wick"
-          }
-        }
-      ]
-    },
-    {
-      "name": "Divergent Universe: Famished Worker",
-      "sets": [
-        {
-          "name": "Lushaka, the Sunken Seas",
-          "imagePath": "Item_Lushaka,_the_Sunken_Seas.webp",
-          "pieces": {
-            "Link Rope": "Lushaka's Twinlanes Pearl Necklace",
-            "Planar Sphere": "Lushaka's Waterscape Coral Crown"
-          }
-        },
-        {
-          "name": "The Wondrous BananAmusment Park",
-          "imagePath": "Item_The_Wondrous_BananAmusement_Park.webp",
-          "pieces": {
-            "Link Rope": "",
-            "Planar Sphere": ""
-          }
-        }
-      ]
-    },
-    {
-      "name": "Divergent Universe: Unceasing Strife",
-      "sets": [
-        {
-          "name": "Bone Collection's Serene Demesne",
-          "imagePath": "Item_Bone_Collection's_Serene_Demesne.webp",
-          "pieces": {
-            "Link Rope": "Aidonia's Deathward Bone Chains",
-            "Planar Sphere": "Aidonia's Deceased Gravestones"
-          }
-        },
-        {
-          "name": "Giant Tree of Rapt Brooding",
-          "imagePath": "Item_Giant_Tree_of_Rapt_Brooding.webp",
-          "pieces": {
-            "Link Rope": "",
-            "Planar Sphere": ""
-          }
-        }
-      ]
-    },
-    {
-      "name": "Divergent Universe: Moonlit Blood",
-      "sets": [
-        {
-          "name": "Arcaida of Woven Dreams",
-          "imagePath": "Item_Arcadia_of_Woven_Dreams.webp",
-          "pieces": {
-            "Link Rope": "Membrance Maze's Wishing Whistle",
-            "Planar Sphere": "Membrance Maze's Serene Treehouse"
-          }
-        },
-        {
-          "name": "Revelry by the Sea",
-          "imagePath": "Item_Revelry_by_the_Sea.webp",
-          "pieces": {
-            "Link Rope": "",
-            "Planar Sphere": ""
-          }
-        }
-      ]
-    },
-    {
-      "name": "Divergent Universe: Within the West Wind",
-      "sets": [
-        {
-          "name": "Tengoku@Livestream",
-          "imagePath": "Item_Tengoku_Livestream.webp",
-          "pieces": {
-            "Link Rope": "Livestream's Chatter Banter",
-            "Planar Sphere": "Livestream's Protean Vistas"
-          }
-        },
-        {
-          "name": "Amphoreus, The Eternal Land",
-          "imagePath": "Item_Amphoreus,_The_Eternal_Land.webp",
-          "pieces": {
-            "Link Rope": "Eternal Verses of Amphoreus",
-            "Planar Sphere": "Last West Wind of Amphoreus"
-          }
-        }
-      ]
-    },
-    {
-      "name": "Cavern of Corrosion: Path of Possession",
-      "sets": [
-        {
-          "name": "Diviner of Distant Reach",
-          "imagePath": "Item_Diviner_of_Distant_Reach.webp",
-          "pieces": {
-            "Head": "Diviner's Extrapolation Jade Abacus",
-            "Hand": "Diviner's Ingenium Prosthetic Hand",
-            "Body": "Diviner's Astral Robe",
-            "Feet": "Diviner's Cloud-Soaring Boots"
-          }
-        },
-        {
-          "name": "Ever-Glorious Magical Girl",
-          "imagePath": "Item_Ever-Glorious_Magical_Girl.webp",
-          "pieces": {
-            "Head": "Magical Girl's Shining Medal",
-            "Hand": "Magical Girl's Protective Gloves",
-            "Body": "Magical Girl's Everdance Battle Skirt",
-            "Feet": "Magical Girl's Contract Boots"
-          }
-        }
-      ]
-    }
-  ]
+	"domains": [
+		{
+			"name": "Cavern of Corrosion: Path of Thundersurge",
+			"sets": [
+				{
+					"name": "Wavestrider Captain",
+					"imagePath": "Item_Wavestrider_Captain.webp",
+					"pieces": {
+						"Head": "Captain's Navigator Hat",
+						"Body": "Captain's Wind Mantle",
+						"Hand": "Captain's Lightcatcher Astrolabe",
+						"Feet": "Captain's Tidal Boots"
+					}
+				},
+				{
+					"name": "Warrior Goddess of Sun and Thunder",
+					"imagePath": "Item_Warrior_Goddess_of_Sun_and_Thunder.webp",
+					"pieces": {
+						"Head": "Warrior Goddess's Winged Helmet",
+						"Body": "Warrior Goddess's Dawn Cape",
+						"Hand": "Warrior Goddess's Cavalry Gauntlets",
+						"Feet": "Warrior Goddess's Honor Spurs"
+					}
+				}
+			]
+		},
+		{
+			"name": "Cavern of Corrosion: Path of Gelid Wind",
+			"sets": [
+				{
+					"name": "Hunter of Glacial Forest",
+					"imagePath": "Item_Hunter_of_Glacial_Forest.webp",
+					"pieces": {
+						"Head": "Hunter's Artaius Hood",
+						"Body": "Hunter's Ice Dragon Cloak",
+						"Hand": "Hunter's Lizard Gloves",
+						"Feet": "Hunter's Soft Elkskin Boots"
+					}
+				},
+				{
+					"name": "Eagle of Twilight Line",
+					"imagePath": "Item_Eagle_of_Twilight_Line.webp",
+					"pieces": {
+						"Head": "Eagle's Beaked Helmet",
+						"Body": "Eagle's Winged Suit Harness",
+						"Hand": "Eagle's Soaring Rings",
+						"Feet": "Eagle's Quilted Puttees"
+					}
+				}
+			]
+		},
+		{
+			"name": "Cavern of Corrosion: Path of Jabbing Punch",
+			"sets": [
+				{
+					"name": "Champion of Streetwise Boxing",
+					"imagePath": "Item_Champion_of_Streetwise_Boxing.webp",
+					"pieces": {
+						"Head": "Champion's Headgear",
+						"Body": "Champion's Chest Guard",
+						"Hand": "Champion's Heavy Gloves",
+						"Feet": "Champion's Fleetfoot Boots"
+					}
+				},
+				{
+					"name": "Thief of Shooting Meteor",
+					"imagePath": "Item_Thief_of_Shooting_Meteor.webp",
+					"pieces": {
+						"Head": "Thief's Myriad-Faced Mask",
+						"Body": "Thief's Steel Grappling Hook Vest",
+						"Hand": "Thief's Gloves With Prints",
+						"Feet": "Thief's Meteor Boots"
+					}
+				}
+			]
+		},
+		{
+			"name": "Cavern of Corrosion: Path of Drifting",
+			"sets": [
+				{
+					"name": "Passerby of Wandering Cloud",
+					"imagePath": "Item_Passerby_of_Wandering_Cloud.webp",
+					"pieces": {
+						"Head": "Passerby's Rejuvenated Wooden Hairstick",
+						"Body": "Passerby's Ragged Embroided Coat",
+						"Hand": "Passerby's Roaming Dragon Bracers",
+						"Feet": "Passerby's Stygian Hiking Boots"
+					}
+				},
+				{
+					"name": "Musketeer of Wild Wheat",
+					"imagePath": "Item_Musketeer_of_Wild_Wheat.webp",
+					"pieces": {
+						"Head": "Musketeer's Wild Wheat Felt Hat",
+						"Body": "Musketeer's Wind-Hunting Shawl",
+						"Hand": "Musketeer's Coarse Leather Gloves",
+						"Feet": "Musketeer's Rivets Riding Boots"
+					}
+				}
+			]
+		},
+		{
+			"name": "Cavern of Corrosion: Path of Providence",
+			"sets": [
+				{
+					"name": "Guard of Wuthering Snow",
+					"imagePath": "Item_Guard_of_Wuthering_Snow.webp",
+					"pieces": {
+						"Head": "Guard's Cast Iron Helmet",
+						"Body": "Guard's Uniform of Olden Times",
+						"Hand": "Guard's Shining Gauntlets",
+						"Feet": "Guard's Silver Greaves"
+					}
+				},
+				{
+					"name": "Genius of Brilliant Stars",
+					"imagePath": "Item_Genius_of_Brilliant_Stars.webp",
+					"pieces": {
+						"Head": "Genius's Ultraremote Sensing Visor",
+						"Body": "Genius's Metafield Suit",
+						"Hand": "Genius's Frequency Catcher",
+						"Feet": "Genius's Gravity Walker Boots"
+					}
+				}
+			]
+		},
+		{
+			"name": "Cavern of Corrosion: Path of Holy Hymn",
+			"sets": [
+				{
+					"name": "Knight of Purity Palace",
+					"imagePath": "Item_Knight_of_Purity_Palace.webp",
+					"pieces": {
+						"Head": "Knight's Forgiving Casque",
+						"Body": "Knight's Solemn Breastplate",
+						"Hand": "Knight's Silent Oath Rings",
+						"Feet": "Knight's Iron Boots of Order"
+					}
+				},
+				{
+					"name": "Band of Sizzling Thunder",
+					"imagePath": "Item_Band_of_Sizzling_Thunder.webp",
+					"pieces": {
+						"Head": "Band's Polarized Sunglasses",
+						"Body": "Band's Leather Jacket With Studs",
+						"Hand": "Band's Touring Bracelet",
+						"Feet": "Band's Ankle Boots With Rivets"
+					}
+				}
+			]
+		},
+		{
+			"name": "Cavern of Corrosion: Path of Conflagration",
+			"sets": [
+				{
+					"name": "Firesmith of Lava-Forging",
+					"imagePath": "Item_Firesmith_of_Lava-Forging.webp",
+					"pieces": {
+						"Head": "Firesmith's Obsidian Goggles",
+						"Body": "Firesmith's Fireproof Apron",
+						"Hand": "Firesmith's Ring of Flame-Mastery",
+						"Feet": "Firesmith's Alloy Leggings"
+					}
+				},
+				{
+					"name": "Wastelander of Banditry Desert",
+					"imagePath": "Item_Wastelander_of_Banditry_Desert.webp",
+					"pieces": {
+						"Head": "Wastelander's Breathing Mask",
+						"Body": "Wastelander's Friar Robe",
+						"Hand": "Wastelander's Desert Terminal",
+						"Feet": "Wastelander's Powered Greaves"
+					}
+				}
+			]
+		},
+		{
+			"name": "Cavern of Corrosion: Path of Elixir Seekers",
+			"sets": [
+				{
+					"name": "Longevous Desciple",
+					"imagePath": "Item_Longevous_Disciple.webp",
+					"pieces": {
+						"Head": "Disciple's Prosthetic Eye",
+						"Body": "Disciple's Dewy Feather Garb",
+						"Hand": "Disciple's Ingenium Hand",
+						"Feet": "Disciple's Celestial Silk Sandals"
+					}
+				},
+				{
+					"name": "Messenger Traversing Hackerspace",
+					"imagePath": "Item_Messenger_Traversing_Hackerspace.webp",
+					"pieces": {
+						"Head": "Messenger's Holovisor",
+						"Body": "Messenger's Secret Satchel",
+						"Hand": "Messenger's Transformative Arm",
+						"Feet": "Messenger's Par-kool Sneakers"
+					}
+				}
+			]
+		},
+		{
+			"name": "Cavern of Corrosion: Path of Darkness",
+			"sets": [
+				{
+					"name": "The Ashblazing Grand Duke",
+					"imagePath": "Item_The_Ashblazing_Grand_Duke.webp",
+					"pieces": {
+						"Head": "Grand Duke's Crown of Netherflame",
+						"Body": "Grand Duke's Robe of Grace",
+						"Hand": "Grand Duke's Gloves of Fieryfury",
+						"Feet": "Grand Duke's Ceremonial Boots"
+					}
+				},
+				{
+					"name": "Prisoner in Deep Confinement",
+					"imagePath": "Item_Prisoner_in_Deep_Confinement.webp",
+					"pieces": {
+						"Head": "Prisoner's Sealed Muzzle",
+						"Body": "Prisoner's Repressive Straitjacket",
+						"Hand": "Prisoner's Leadstone Shackles",
+						"Feet": "Prisoner's Restrictive Fetters"
+					}
+				}
+			]
+		},
+		{
+			"name": "Cavern of Corrosion: Path of Dreamdive",
+			"sets": [
+				{
+					"name": "Pioneer Diver of Dead Waters",
+					"imagePath": "Item_Pioneer_Diver_of_Dead_Waters.webp",
+					"pieces": {
+						"Head": "Pioneer's Heatproof Shell Helmet",
+						"Body": "Pioneer's Sealed Lead Apron",
+						"Hand": "Pioneer's Lacuna Compass Wristband",
+						"Feet": "Pioneer's Starfaring Anchor Boots"
+					}
+				},
+				{
+					"name": "Watchmaker of Master of Dream Machinations",
+					"imagePath": "Item_Watchmaker,_Master_of_Dream_Machinations.webp",
+					"pieces": {
+						"Head": "Watchmaker's Telescoping Lens",
+						"Body": "Watchmaker's Illusory Formal Suit",
+						"Hand": "Watchmaker's Fortuitous Wristwatch",
+						"Feet": "Watchmaker's Dream-Concealing Dress Shoes"
+					}
+				}
+			]
+		},
+		{
+			"name": "Cavern of Corrosion: Path of Cavalier",
+			"sets": [
+				{
+					"name": "Iron Cavalry Against the Scourge",
+					"imagePath": "Item_Iron_Cavalry_Against_the_Scourge.webp",
+					"pieces": {
+						"Head": "Iron Cavalry's Homing Helm",
+						"Body": "Iron Cavalry's Silvery Armor",
+						"Hand": "Iron Cavalry's Crushing Wristguards",
+						"Feet": "Iron Cavalry's Skywalk Greaves"
+					}
+				},
+				{
+					"name": "The Wind-Soaring Valorous",
+					"imagePath": "Item_The_Wind-Soaring_Valorous.webp",
+					"pieces": {
+						"Head": "Valorous Mask of Northern Skies",
+						"Body": "Valorous Plate of Soaring Flight",
+						"Hand": "Valorous Bracelet of Grappling Hooks",
+						"Feet": "Valorous Greaves of Pursuing Hunt"
+					}
+				}
+			]
+		},
+		{
+			"name": "Cavern of Corrosion: Path of Uncertainty",
+			"sets": [
+				{
+					"name": "Scholar Lost in Erudition",
+					"imagePath": "Item_Scholar_Lost_in_Erudition.webp",
+					"pieces": {
+						"Head": "Scholar's Silver-Rimmed Monocle",
+						"Body": "Scholar's Tweed Jacket",
+						"Hand": "Scholar's Auxiliary Knuckle",
+						"Feet": "Scholar's Felt Snowboots"
+					}
+				},
+				{
+					"name": "Sacerdos' Relived Ordeal",
+					"imagePath": "Item_Sacerdos'_Relived_Ordeal.webp",
+					"pieces": {
+						"Head": "Sacerdos' Melodic Earrings",
+						"Body": "Sacerdos' Ceremonial Garb",
+						"Hand": "Sacerdos' Welcoming Gloves",
+						"Feet": "Sacerdos' Arduous Boots"
+					}
+				}
+			]
+		},
+		{
+			"name": "Cavern of Corrosion: Path of Aria",
+			"sets": [
+				{
+					"name": "Hero of Triumphant Song",
+					"imagePath": "Item_Hero_of_Triumphant_Song.webp",
+					"pieces": {
+						"Head": "Hero's Wreath of Championship",
+						"Body": "Hero's Gallant Golden Armor",
+						"Hand": "Hero's Gilded Bracers",
+						"Feet": "Hero's Firechasing Shinguards"
+					}
+				},
+				{
+					"name": "Poet of Mourning Collapse",
+					"imagePath": "Item_Poet_of_Mourning_Collapse.webp",
+					"pieces": {
+						"Head": "Poet's Dill Wreath",
+						"Body": "Poet's Star-Studded Skirt",
+						"Hand": "Poet's Gilded Bracelets",
+						"Feet": "Poet's Silver-Studded Shoes"
+					}
+				}
+			]
+		},
+		{
+			"name": "Cavern of Corrosion: Path of Hidden Salvation",
+			"sets": [
+				{
+					"name": "World-Remaking Deliverer",
+					"imagePath": "Item_World-Remaking_Deliverer.webp",
+					"pieces": {
+						"Head": "Deliverer's Hood of Creation",
+						"Body": "Deliverer's Robe of Legacy",
+						"Hand": "Deliverer's Sword Gauntlets",
+						"Feet": "Deliverer's Boots of Pioneering"
+					}
+				},
+				{
+					"name": "Self-Enshrouded Recluse",
+					"imagePath": "Item_Self-Enshrouded_Recluse.webp",
+					"pieces": {
+						"Head": "Recluse's Wide-Brimmed Fedora",
+						"Body": "Recluse's Camel-Colored Coat",
+						"Hand": "Recluse's Refined Timepiece",
+						"Feet": "Recluse's Soft Suede Boots"
+					}
+				}
+			]
+		},
+		{
+			"name": "Divergent Universe: Untoppled Walls",
+			"sets": [
+				{
+					"name": "Space Sealing Station",
+					"imagePath": "Item_Space_Sealing_Station.webp",
+					"pieces": {
+						"Link Rope": "",
+						"Planar Sphere": ""
+					}
+				},
+				{
+					"name": "Fleet of the Ageless",
+					"imagePath": "Item_Fleet_of_the_Ageless.webp",
+					"pieces": {
+						"Link Rope": "The Xianzhou Luofu's Ambrosial Arbor Vines",
+						"Planar Sphere": "The Xianzhou Luofu's Celestial Ark"
+					}
+				}
+			]
+		},
+		{
+			"name": "Divergent Universe: Smelted Heart",
+			"sets": [
+				{
+					"name": "Talia: Kingdom of Banditry",
+					"imagePath": "Item_Talia_Kingdom_of_Banditry.webp",
+					"pieces": {
+						"Link Rope": "",
+						"Planar Sphere": ""
+					}
+				},
+				{
+					"name": "Sprightly Vonwacq",
+					"imagePath": "Item_Sprightly_Vonwacq.webp",
+					"pieces": {
+						"Link Rope": "",
+						"Planar Sphere": ""
+					}
+				}
+			]
+		},
+		{
+			"name": "Divergent Universe: Gentle Words",
+			"sets": [
+				{
+					"name": "Pan-Cosmic Commercial Enterprise",
+					"imagePath": "Item_Pan-Cosmic_Commercial_Enterprise.webp",
+					"pieces": {
+						"Link Rope": "The IPC's Trade Route",
+						"Planar Sphere": "The IPC's Mega HQ"
+					}
+				},
+				{
+					"name": "Celestial Differentiator",
+					"imagePath": "Item_Celestial_Differentiator.webp",
+					"pieces": {
+						"Link Rope": "Planet Screwllum's Ring System",
+						"Planar Sphere": "Planet Screwllum's Mechanical Sundial"
+					}
+				}
+			]
+		},
+		{
+			"name": "Divergent Universe: PermaFrost",
+			"sets": [
+				{
+					"name": "Belobog of the Architects",
+					"imagePath": "Item_Belobog_of_the_Architects.webp",
+					"pieces": {
+						"Link Rope": "Belobog's Iron Defenses",
+						"Planar Sphere": "Belobog's Fortress of Preservation"
+					}
+				},
+				{
+					"name": "Inert Salsotto",
+					"imagePath": "Item_Inert_Salsotto.webp",
+					"pieces": {
+						"Link Rope": "Salsotto's Terminator Line",
+						"Planar Sphere": "Salsotto's Moving Cityscape"
+					}
+				}
+			]
+		},
+		{
+			"name": "Divergent Universe: Fruit of Evil",
+			"sets": [
+				{
+					"name": "Rutilant Arena",
+					"imagePath": "Item_Rutilant_Arena.webp",
+					"pieces": {
+						"Link Rope": "",
+						"Planar Sphere": ""
+					}
+				},
+				{
+					"name": "Broken Keel",
+					"imagePath": "Item_Broken_Keel.webp",
+					"pieces": {
+						"Link Rope": "Insumousu's Frayed Hawser",
+						"Planar Sphere": "Insumousu's Whalefall Ship"
+					}
+				}
+			]
+		},
+		{
+			"name": "Divergent Universe: Pouring Blades",
+			"sets": [
+				{
+					"name": "Firmament Frontiline: Glamoth",
+					"imagePath": "Item_Firmament_Frontline_Glamoth.webp",
+					"pieces": {
+						"Link Rope": "Glamoth's Silent Tombstones",
+						"Planar Sphere": "Glamoth's Iron Cavalry Regiment"
+					}
+				},
+				{
+					"name": "Penacony, Land of Dreams",
+					"imagePath": "Item_Penacony,_Land_of_the_Dreams.webp",
+					"pieces": {
+						"Link Rope": "Penacony's Dream-Seeking Tracks",
+						"Planar Sphere": "Penacony's Grand Hotel"
+					}
+				}
+			]
+		},
+		{
+			"name": "Divergent Universe: To Sweet Dreams",
+			"sets": [
+				{
+					"name": "Sigonia, the Unclaimed Desolation",
+					"imagePath": "Item_Sigonia,_the_Unclaimed_Desolation.webp",
+					"pieces": {
+						"Link Rope": "",
+						"Planar Sphere": ""
+					}
+				},
+				{
+					"name": "Izumo Gensei and Takama Divine Realm",
+					"imagePath": "Item_Izumo_Gensei_and_Takama_Divine_Realm.webp",
+					"pieces": {
+						"Link Rope": "Izumo's Blades of Origin and Ending",
+						"Planar Sphere": "Izumo's Magatsu no Morokami"
+					}
+				}
+			]
+		},
+		{
+			"name": "Divergent Universe: Eternal Comedy",
+			"sets": [
+				{
+					"name": "Duran, Dynasty of Running Wolves",
+					"imagePath": "Item_Duran,_Dynasty_of_Running_Wolves.webp",
+					"pieces": {
+						"Link Rope": "Duran's Mechabeast Bridle",
+						"Planar Sphere": "Duran's Tent of Golden Skys"
+					}
+				},
+				{
+					"name": "Forge of the Kalkpagni Lantern",
+					"imagePath": "Item_Forge_of_the_Kalpagni_Lantern.webp",
+					"pieces": {
+						"Link Rope": "Forge's Heavenly Flamewheel Silk",
+						"Planar Sphere": "Forge's Lotus Lantern Wick"
+					}
+				}
+			]
+		},
+		{
+			"name": "Divergent Universe: Famished Worker",
+			"sets": [
+				{
+					"name": "Lushaka, the Sunken Seas",
+					"imagePath": "Item_Lushaka,_the_Sunken_Seas.webp",
+					"pieces": {
+						"Link Rope": "Lushaka's Twinlanes",
+						"Planar Sphere": "Lushaka's Waterscape"
+					}
+				},
+				{
+					"name": "The Wondrous BananAmusment Park",
+					"imagePath": "Item_The_Wondrous_BananAmusement_Park.webp",
+					"pieces": {
+						"Link Rope": "",
+						"Planar Sphere": ""
+					}
+				}
+			]
+		},
+		{
+			"name": "Divergent Universe: Unceasing Strife",
+			"sets": [
+				{
+					"name": "Bone Collection's Serene Demesne",
+					"imagePath": "Item_Bone_Collection's_Serene_Demesne.webp",
+					"pieces": {
+						"Link Rope": "Aidonia's Deathward Bone Chains",
+						"Planar Sphere": "Aidonia's Deceased Gravestones"
+					}
+				},
+				{
+					"name": "Giant Tree of Rapt Brooding",
+					"imagePath": "Item_Giant_Tree_of_Rapt_Brooding.webp",
+					"pieces": {
+						"Link Rope": "",
+						"Planar Sphere": ""
+					}
+				}
+			]
+		},
+		{
+			"name": "Divergent Universe: Moonlit Blood",
+			"sets": [
+				{
+					"name": "Arcaida of Woven Dreams",
+					"imagePath": "Item_Arcadia_of_Woven_Dreams.webp",
+					"pieces": {
+						"Link Rope": "Membrance Maze's Wishing Whistle",
+						"Planar Sphere": "Membrance Maze's Serene Treehouse"
+					}
+				},
+				{
+					"name": "Revelry by the Sea",
+					"imagePath": "Item_Revelry_by_the_Sea.webp",
+					"pieces": {
+						"Link Rope": "Warbling Shores' Cantillation Trail",
+						"Planar Sphere": "Warbling Shores' Blazing Beacon"
+					}
+				}
+			]
+		},
+		{
+			"name": "Divergent Universe: Within the West Wind",
+			"sets": [
+				{
+					"name": "Tengoku@Livestream",
+					"imagePath": "Item_Tengoku_Livestream.webp",
+					"pieces": {
+						"Link Rope": "Livestream's Chatter Banter",
+						"Planar Sphere": "Livestream's Protean Vistas"
+					}
+				},
+				{
+					"name": "Amphoreus, The Eternal Land",
+					"imagePath": "Item_Amphoreus,_The_Eternal_Land.webp",
+					"pieces": {
+						"Link Rope": "Eternal Verses of Amphoreus",
+						"Planar Sphere": "Last West Wind of Amphoreus"
+					}
+				}
+			]
+		},
+		{
+			"name": "Cavern of Corrosion: Path of Possession",
+			"sets": [
+				{
+					"name": "Diviner of Distant Reach",
+					"imagePath": "Item_Diviner_of_Distant_Reach.webp",
+					"pieces": {
+						"Head": "Diviner's Extrapolation Jade Abacus",
+						"Hand": "Diviner's Ingenium Prosthetic Hand",
+						"Body": "Diviner's Astral Robe",
+						"Feet": "Diviner's Cloud-Soaring Boots"
+					}
+				},
+				{
+					"name": "Ever-Glorious Magical Girl",
+					"imagePath": "Item_Ever-Glorious_Magical_Girl.webp",
+					"pieces": {
+						"Head": "Magical Girl's Shining Medal",
+						"Hand": "Magical Girl's Protective Gloves",
+						"Body": "Magical Girl's Everdance Battle Skirt",
+						"Feet": "Magical Girl's Contract Boots"
+					}
+				}
+			]
+		}
+	]
 }

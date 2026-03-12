@@ -785,10 +785,10 @@
   },
   "": {
     "name": "",
-    "set": "Revelry by the Sea",
+    "set": "Giant Tree of Rapt Brooding",
     "slot": "Planar Sphere",
-    "domain": "Divergent Universe: Moonlit Blood",
-    "imagePath": "Item_Revelry_by_the_Sea.webp"
+    "domain": "Divergent Universe: Unceasing Strife",
+    "imagePath": "Item_Giant_Tree_of_Rapt_Brooding.webp"
   },
   "The Xianzhou Luofu's Ambrosial Arbor Vines": {
     "name": "The Xianzhou Luofu's Ambrosial Arbor Vines",
@@ -944,15 +944,15 @@
     "domain": "Divergent Universe: Eternal Comedy",
     "imagePath": "Item_Forge_of_the_Kalpagni_Lantern.webp"
   },
-  "Lushaka's Twinlanes Pearl Necklace": {
-    "name": "Lushaka's Twinlanes Pearl Necklace",
+  "Lushaka's Twinlanes": {
+    "name": "Lushaka's Twinlanes",
     "set": "Lushaka, the Sunken Seas",
     "slot": "Link Rope",
     "domain": "Divergent Universe: Famished Worker",
     "imagePath": "Item_Lushaka,_the_Sunken_Seas.webp"
   },
-  "Lushaka's Waterscape Coral Crown": {
-    "name": "Lushaka's Waterscape Coral Crown",
+  "Lushaka's Waterscape": {
+    "name": "Lushaka's Waterscape",
     "set": "Lushaka, the Sunken Seas",
     "slot": "Planar Sphere",
     "domain": "Divergent Universe: Famished Worker",
@@ -985,6 +985,20 @@
     "slot": "Planar Sphere",
     "domain": "Divergent Universe: Moonlit Blood",
     "imagePath": "Item_Arcadia_of_Woven_Dreams.webp"
+  },
+  "Warbling Shores' Cantillation Trail": {
+    "name": "Warbling Shores' Cantillation Trail",
+    "set": "Revelry by the Sea",
+    "slot": "Link Rope",
+    "domain": "Divergent Universe: Moonlit Blood",
+    "imagePath": "Item_Revelry_by_the_Sea.webp"
+  },
+  "Warbling Shores' Blazing Beacon": {
+    "name": "Warbling Shores' Blazing Beacon",
+    "set": "Revelry by the Sea",
+    "slot": "Planar Sphere",
+    "domain": "Divergent Universe: Moonlit Blood",
+    "imagePath": "Item_Revelry_by_the_Sea.webp"
   },
   "Livestream's Chatter Banter": {
     "name": "Livestream's Chatter Banter",
