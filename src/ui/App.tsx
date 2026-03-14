@@ -218,7 +218,7 @@ function applyKernel(canvas: HTMLCanvasElement, kernel: number[]) {
 }
 async function readText(image: string) {
 	const result = await Tesseract.recognize(image, "eng", {
-		//logger: (m) => console.log(m)
+		logger: (m) => console.log(m)
 	});
 
 	console.log("OCR RESULT:", result.data.text);

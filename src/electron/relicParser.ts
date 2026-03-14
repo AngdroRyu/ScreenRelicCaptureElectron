@@ -70,17 +70,32 @@ function normalize(text: string) {
 function findRelicFromLookup(
 	text: string
 ): { key: string; relic: RelicLookupEntry } | null {
-	console.log("Searching relic in OCR text...");
-	console.log(text);
-	const normalizedText = normalize(text);
+	const lines = text
+		.split(/\r?\n/)
+		.map((l) => l.trim())
+		.filter(Boolean);
+
+	let bestMatch: { key: string; relic: RelicLookupEntry; dist: number } | null =
+		null;
+
 	for (const key in relicLookup) {
 		const normalizedKey = normalize(key);
-		//console.log("Checking relic key:", normalizedKey);
-		if (normalizedText.includes(normalizedKey)) {
-			console.log("MATCHED RELIC:", key);
-			return { key, relic: relicLookup[key] };
+
+		for (const line of lines) {
+			const normalizedLine = normalize(line);
+			const dist = levenshteinDistance(normalizedLine, normalizedKey);
+			if (!bestMatch || dist < bestMatch.dist) {
+				bestMatch = { key, relic: relicLookup[key], dist };
+			}
 		}
 	}
+
+	if (bestMatch && bestMatch.dist <= 5) {
+		// adjust threshold for OCR errors
+		console.log("FUZZY MATCHED RELIC:", bestMatch.key);
+		return { key: bestMatch.key, relic: bestMatch.relic };
+	}
+
 	console.warn("No relic match found in OCR text.");
 	return null;
 }
@@ -90,6 +105,7 @@ export function parseRelicFromText(text: string): Relic | null {
 	console.log("========== PARSE RELIC START ==========");
 	console.log("OCR TEXT RECEIVED:\n", text);
 
+	// 1️⃣ Find relic
 	const relicMatch = findRelicFromLookup(text);
 	if (!relicMatch) {
 		console.warn("Parser could not find relic.");
@@ -99,12 +115,19 @@ export function parseRelicFromText(text: string): Relic | null {
 	const { key, relic } = relicMatch;
 	console.log("Relic detected:", key, relic);
 
-	const mainStatData = detectMainStat(text, relic.slot);
+	// 2️⃣ Remove relic name from text before main stat detection
+	// Use regex to remove the first occurrence of relic name (case-insensitive)
+	const cleanedText = text.replace(new RegExp(key, "i"), "").trim();
+
+	// 3️⃣ Detect main stat from the text after removing relic name
+	const mainStatData = detectMainStat(cleanedText, relic.slot);
 	console.log("Main stat detected:", mainStatData);
 
-	const substats = detectSubstats(mainStatData?.remainingText || text);
+	// 4️⃣ Detect substats using remaining text
+	const substats = detectSubstats(mainStatData?.remainingText || cleanedText);
 	console.log("Substats detected:", substats);
 
+	// 5️⃣ Build parsed relic object
 	const parsedRelic: Relic = {
 		set: relic.set,
 		piece: relic.name || key || "Unknown",
@@ -117,21 +140,17 @@ export function parseRelicFromText(text: string): Relic | null {
 			: `/Item_${relic.set.replace(/[^a-zA-Z0-9]/g, "_")}.webp`
 	};
 
-	// --- Detect rolls for each substat ---
+	// 6️⃣ Detect rolls for each substat
 	parsedRelic.substats.forEach((s) => {
 		if (s.name && s.value) {
 			let numericValue = parseFloat(s.value.replace("%", ""));
 			let tableKey = s.name;
 
-			if (s.value.includes("%")) {
-				// Only append % for DEF, ATK, HP
-				if (["DEF", "ATK", "HP"].includes(s.name)) {
-					tableKey = s.name + "%";
-					numericValue /= 100; // convert to fraction
-				}
+			if (s.value.includes("%") && ["DEF", "ATK", "HP"].includes(s.name)) {
+				tableKey = s.name + "%";
+				numericValue /= 100; // convert to fraction
 			}
 
-			// Convert special fractional stats if >1
 			if (
 				[
 					"Break Effect",
@@ -147,68 +166,71 @@ export function parseRelicFromText(text: string): Relic | null {
 
 			const rolls = detectSubstatRolls(tableKey, numericValue);
 			s.rolls = rolls || undefined;
-
-			console.log(
-				`Substat ${s.name} value ${s.value} → tableKey ${tableKey} → numeric ${numericValue} → rolls:`,
-				rolls
-			);
 		}
 	});
 
 	console.log("FINAL PARSED RELIC:", parsedRelic);
 	console.log("========== PARSE RELIC END ==========");
-
 	return parsedRelic;
 }
-
 // --- Detect main stat ---
 function detectMainStat(text: string, slot: string) {
-	console.log("Detecting main stat for slot:", slot);
 	const possibleStats = mainStatsBySlot[slot] || [];
-	const lines = text.split(/\r?\n/);
 	let remainingText = text;
 
-	for (const rawLine of lines) {
-		const line = rawLine
-			.replace(/[^\w\d.+% ]/g, "")
+	// Remove relic name if present
+	const relicMatch = findRelicFromLookup(text);
+	if (relicMatch) {
+		const relicName = relicMatch.relic.name;
+		const escapedRelic = relicName.replace(/[-/\\^$*+?.()|[\]{}]/g, "\\$&");
+		const relicRegex = new RegExp(escapedRelic, "i");
+		remainingText = remainingText.replace(relicRegex, "").trim();
+	}
+
+	// Split lines and normalize OCR artifacts
+	const lines = remainingText.split(/\r?\n/).map((line) =>
+		line
+			.replace(/^[^\p{L}]+/u, "") // remove leading non-letter characters (Unicode safe)
+			.replace(/[^\w\d.+% ]/gu, "") // remove other stray symbols
 			.trim()
-			.toLowerCase();
+	);
+
+	for (const line of lines) {
 		if (!line) continue;
 
-		console.log("Checking line for main stat:", line);
+		const valueMatch = line.match(/([0-9]+(\.[0-9]+)?%?)/);
+		if (!valueMatch) continue;
 
-		for (const stat of possibleStats) {
-			const statLower = stat.toLowerCase();
-			if (line.includes(statLower)) {
-				const regex = new RegExp(`${statLower}\\s*([\\d.]+%?)`);
-				const match = line.match(regex);
-				if (match) {
-					console.log("Main stat value detected:", match[1]);
-					const escapedLine = rawLine.replace(/[-/\\^$*+?.()|[\]{}]/g, "\\$&");
-					const removeRegex = new RegExp(escapedLine, "g");
-					remainingText = remainingText.replace(removeRegex, "").trim();
-					return { name: stat, value: match[1], remainingText };
-				}
-			}
+		const rawStatName = line.replace(valueMatch[0], "").trim();
+		const candidateName = fuzzyMatchStat(rawStatName, possibleStats);
+
+		if (candidateName) {
+			// Remove this line from remaining text
+			const escapedLine = line.replace(/[-/\\^$*+?.()|[\]{}]/g, "\\$&");
+			remainingText = remainingText
+				.replace(new RegExp(escapedLine, "g"), "")
+				.trim();
+
+			return { name: candidateName, value: valueMatch[1], remainingText };
 		}
 	}
-	console.warn("No main stat detected.");
-	return { name: null, value: null, remainingText: text };
+
+	return { name: null, value: null, remainingText };
 }
 
 // --- Detect substats ---
 function detectSubstats(text: string) {
 	console.log("Detecting substats...");
-	if (text.includes("(+3 to activate)")) {
-		text = text.replace(/\(\+3 to activate\)/g, "").trim();
-		console.log("Removed (+3 to activate)");
-	}
+
+	// Remove activation notes
+	text = text.replace(/\(\+3 to activate\)/g, "").trim();
 
 	const found: RelicSubstat[] = [];
 	const lines = text.split(/\r?\n/);
+
 	for (const rawLine of lines) {
 		const line = rawLine
-			.replace(/^[^\w\d.+%]+/, "")
+			.replace(/^[^\w\d]+/, "")
 			.trim()
 			.toLowerCase();
 		if (!line) continue;
@@ -223,10 +245,9 @@ function detectSubstats(text: string) {
 		}
 	}
 
-	// Throw an error if less than 4 substats were found
 	if (found.length !== 4) {
-		throw new Error(
-			`Expected 4 substats, but found ${found.length}: ${JSON.stringify(found)}`
+		console.warn(
+			`Expected 4 substats, but found ${found.length}. Check OCR or main stat detection.`
 		);
 	}
 
@@ -316,4 +337,33 @@ export function detectSubstatRolls(
 
 	console.log(`detectSubstatRolls(${stat}, ${observedValue}) →`, best);
 	return best;
+}
+function fuzzyMatchStat(line: string, stats: string[]): string | null {
+	const threshold = 2; // allow up to 2 character differences
+	line = line.toLowerCase();
+
+	for (const stat of stats) {
+		const statNorm = stat.toLowerCase();
+		const dist = levenshteinDistance(line, statNorm);
+		if (dist <= threshold) return stat;
+	}
+	return null;
+}
+
+// Simple Levenshtein distance helper
+function levenshteinDistance(a: string, b: string) {
+	const dp = Array.from({ length: a.length + 1 }, () =>
+		Array(b.length + 1).fill(0)
+	);
+	for (let i = 0; i <= a.length; i++) dp[i][0] = i;
+	for (let j = 0; j <= b.length; j++) dp[0][j] = j;
+
+	for (let i = 1; i <= a.length; i++) {
+		for (let j = 1; j <= b.length; j++) {
+			if (a[i - 1] === b[j - 1]) dp[i][j] = dp[i - 1][j - 1];
+			else
+				dp[i][j] = 1 + Math.min(dp[i - 1][j], dp[i][j - 1], dp[i - 1][j - 1]);
+		}
+	}
+	return dp[a.length][b.length];
 }
