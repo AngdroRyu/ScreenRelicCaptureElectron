@@ -1174,5 +1174,33 @@
     "slot": "Feet",
     "domain": "Cavern of Corrosion: Path of Possession",
     "imagePath": "Item_Ever-Glorious_Magical_Girl.webp"
+  },
+  "Punklorde's Data Deluge": {
+    "name": "Punklorde's Data Deluge",
+    "set": "Punklorde Stage Zero",
+    "slot": "Link Rope",
+    "domain": "Divergent Universe: Gilded Recollection",
+    "imagePath": "Item_Punklorde_Stage_Zero.webp"
+  },
+  "Punklorde's Rainbow City": {
+    "name": "Punklorde's Rainbow City",
+    "set": "Punklorde Stage Zero",
+    "slot": "Planar Sphere",
+    "domain": "Divergent Universe: Gilded Recollection",
+    "imagePath": "Item_Punklorde_Stage_Zero.webp"
+  },
+  "Astropolis Employee Credentials": {
+    "name": "Astropolis Employee Credentials",
+    "set": "City of Converging Stars",
+    "slot": "Link Rope",
+    "domain": "Divergent Universe: Gilded Recollection",
+    "imagePath": "Item_City_of_Converging_Stars.webp"
+  },
+  "Astropolis Media Headquarters": {
+    "name": "Astropolis Media Headquarters",
+    "set": "City of Converging Stars",
+    "slot": "Planar Sphere",
+    "domain": "Divergent Universe: Gilded Recollection",
+    "imagePath": "Item_City_of_Converging_Stars.webp"
   }
 }

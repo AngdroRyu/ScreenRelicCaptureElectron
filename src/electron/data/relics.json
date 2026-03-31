@@ -626,6 +626,27 @@
 					}
 				}
 			]
+		},
+		{
+			"name": "Divergent Universe: Gilded Recollection",
+			"sets": [
+				{
+					"name": "Punklorde Stage Zero",
+					"imagePath": "Item_Punklorde_Stage_Zero.webp",
+					"pieces": {
+						"Link Rope": "Punklorde's Data Deluge",
+						"Planar Sphere": "Punklorde's Rainbow City"
+					}
+				},
+				{
+					"name": "City of Converging Stars",
+					"imagePath": "Item_City_of_Converging_Stars.webp",
+					"pieces": {
+						"Link Rope": "Astropolis Employee Credentials",
+						"Planar Sphere": "Astropolis Media Headquarters"
+					}
+				}
+			]
 		}
 	]
 }
