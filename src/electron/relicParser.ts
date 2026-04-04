@@ -18,6 +18,7 @@ export interface Relic {
 	mainValue: string | null;
 	substats: RelicSubstat[];
 	imagePath?: string;
+	timestamp: string;
 }
 
 interface RelicLookupEntry {
@@ -137,7 +138,8 @@ export function parseRelicFromText(text: string): Relic | null {
 		substats,
 		imagePath: relic.imagePath
 			? `/${relic.imagePath}`
-			: `/Item_${relic.set.replace(/[^a-zA-Z0-9]/g, "_")}.webp`
+			: `/Item_${relic.set.replace(/[^a-zA-Z0-9]/g, "_")}.webp`,
+		timestamp: "" // will be set when saving
 	};
 
 	// 6️⃣ Detect rolls for each substat

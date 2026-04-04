@@ -13,6 +13,10 @@ import fs from "fs";
 import { parseRelicFromText } from "./relicParser.js";
 import { saveParsedRelic } from "./saveRelic.js";
 import type { Relic } from "./relicParser.js";
+import crypto from "crypto";
+import axios from "axios";
+
+const SECRET_KEY = "supersecretkey"; // for HMAC signing, optional
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
@@ -241,5 +245,39 @@ ipcMain.handle("REMOVE_RELIC", (_event, index: number) => {
 	} catch (err) {
 		console.error("Failed to remove relic:", err);
 		return false;
+	}
+});
+
+ipcMain.handle("sendRelicsFile", async () => {
+	const relicsPath = path.join(app.getPath("documents"), "parsedRelics.json");
+
+	if (!fs.existsSync(relicsPath)) {
+		throw new Error("No relics file found to send.");
+	}
+
+	const relicsJson = fs.readFileSync(relicsPath, "utf-8");
+
+	// optional: HMAC signature
+	const signature = crypto
+		.createHmac("sha256", SECRET_KEY)
+		.update(relicsJson)
+		.digest("hex");
+
+	// Replace with your Spring Boot endpoint later
+	const SERVER_URL =
+		"https://webhook.site/56cb2689-2f22-4235-b09d-5656c80ed673";
+
+	try {
+		const res = await axios.post(SERVER_URL, relicsJson, {
+			headers: {
+				"Content-Type": "application/json",
+				"X-Signature": signature
+			}
+		});
+		console.log("Relics sent successfully:", res.data);
+		return res.data;
+	} catch (err) {
+		console.error("Failed to send relics:", err);
+		throw err;
 	}
 });

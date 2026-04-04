@@ -25,8 +25,9 @@ declare global {
 			) => void;
 			parseRelicText: (text: string) => Promise<Relic>;
 			openSavedRelics: () => Promise<void>; // opens the window
-			getSavedRelics: () => Promise<Relic[]>; // ← add this
+			getSavedRelics: () => Promise<Relic[]>;
 			removeSavedRelic: (index: number) => Promise<boolean>;
+			sendRelicsFile: () => Promise<string>;
 		};
 	}
 }

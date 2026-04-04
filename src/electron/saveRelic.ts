@@ -19,6 +19,9 @@ export function saveParsedRelic(relic: Relic) {
 		}
 	}
 
+	// Add a timestamp to the relic before saving
+	relic.timestamp = new Date().toISOString();
+
 	// Append the new relic
 	relics.push(relic);
 

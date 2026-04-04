@@ -29,6 +29,7 @@ declare global {
 			openSavedRelics: () => Promise<void>;
 			getSavedRelics: () => Promise<Relic[]>;
 			removeSavedRelic: (index: number) => Promise<boolean>;
+			sendRelicsFile: () => Promise<string>;
 		};
 	}
 }
@@ -62,5 +63,7 @@ contextBridge.exposeInMainWorld("electron", {
 		ipcRenderer.invoke("PARSE_RELIC_TEXT", text),
 	openSavedRelics: () => ipcRenderer.invoke("OPEN_SAVED_RELICS"),
 	getSavedRelics: () => ipcRenderer.invoke("GET_SAVED_RELICS"),
-	removeSavedRelic: (index: number) => ipcRenderer.invoke("REMOVE_RELIC", index)
+	removeSavedRelic: (index: number) =>
+		ipcRenderer.invoke("REMOVE_RELIC", index),
+	sendRelicsFile: (): Promise<string> => ipcRenderer.invoke("sendRelicsFile")
 });
