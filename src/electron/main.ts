@@ -255,29 +255,34 @@ ipcMain.handle("sendRelicsFile", async () => {
 		throw new Error("No relics file found to send.");
 	}
 
+	// Read and parse JSON into a JS array
 	const relicsJson = fs.readFileSync(relicsPath, "utf-8");
+	const relicsArray: Relic[] = JSON.parse(relicsJson); // <-- important: parse to array
 
 	// optional: HMAC signature
 	const signature = crypto
 		.createHmac("sha256", SECRET_KEY)
-		.update(relicsJson)
+		.update(JSON.stringify(relicsArray)) // sign the actual array
 		.digest("hex");
 
-	// Replace with your Spring Boot endpoint later
-	const SERVER_URL =
-		"https://webhook.site/56cb2689-2f22-4235-b09d-5656c80ed673";
+	// Server URL with username query
+	const SERVER_URL = `http://localhost:8080/api/relics/electron-data?username=player123`;
 
 	try {
-		const res = await axios.post(SERVER_URL, relicsJson, {
+		const res = await axios.post(SERVER_URL, relicsArray, {
+			// <-- send array directly
 			headers: {
 				"Content-Type": "application/json",
 				"X-Signature": signature
 			}
 		});
 		console.log("Relics sent successfully:", res.data);
-		return res.data;
-	} catch (err) {
-		console.error("Failed to send relics:", err);
+	} catch (err: unknown) {
+		if (err instanceof Error) {
+			console.error("Failed to send relics:", err.message);
+		} else {
+			console.error("Failed to send relics:", err);
+		}
 		throw err;
 	}
 });
