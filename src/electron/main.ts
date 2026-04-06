@@ -15,7 +15,7 @@ import { saveParsedRelic } from "./saveRelic.js";
 import type { Relic } from "./relicParser.js";
 import crypto from "crypto";
 import axios from "axios";
-
+import { getOrCreateUser } from "./userManager.js";
 const SECRET_KEY = "supersecretkey"; // for HMAC signing, optional
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -247,42 +247,83 @@ ipcMain.handle("REMOVE_RELIC", (_event, index: number) => {
 		return false;
 	}
 });
+const SERVER_URL = "http://localhost:8080";
 
+// -----------------------------
+// Helper: Get last timestamp from server
+// -----------------------------
+async function getLastTimestamp(userUuid: string): Promise<Date | null> {
+	try {
+		const res = await axios.get(`${SERVER_URL}/api/relics/last-timestamp`, {
+			params: { uuid: userUuid }
+		});
+		const isoString: string | null = res.data.lastTimestamp;
+		return isoString ? new Date(isoString) : null;
+	} catch (err) {
+		console.error("Failed to fetch last timestamp:", err);
+		return null;
+	}
+}
+
+// -----------------------------
+// Helper: Filter relics after timestamp
+// -----------------------------
+function filterNewRelics(relics: Relic[], afterDate: Date | null): Relic[] {
+	if (!afterDate) return relics; // no previous timestamp → send all
+	return relics.filter((r) => new Date(r.timestamp) > afterDate);
+}
+
+// -----------------------------
+// IPC handler: send relics
+// -----------------------------
 ipcMain.handle("sendRelicsFile", async () => {
-	const relicsPath = path.join(app.getPath("documents"), "parsedRelics.json");
+	const user = await getOrCreateUser(); // get stored or new UUID
+	const userId = user.uuid;
 
-	if (!fs.existsSync(relicsPath)) {
-		throw new Error("No relics file found to send.");
+	if (!fs.existsSync(relicsJsonPath)) {
+		throw new Error("No relics file found.");
 	}
 
-	// Read and parse JSON into a JS array
-	const relicsJson = fs.readFileSync(relicsPath, "utf-8");
-	const relicsArray: Relic[] = JSON.parse(relicsJson); // <-- important: parse to array
+	const relicsArray: Relic[] = JSON.parse(
+		fs.readFileSync(relicsJsonPath, "utf-8")
+	);
 
-	// optional: HMAC signature
+	// Step 1: Get last timestamp from server
+	const lastTimestamp = await getLastTimestamp(userId);
+	console.log("Last timestamp from server:", lastTimestamp);
+
+	// Step 2: Filter relics after last timestamp
+	const newRelics = filterNewRelics(relicsArray, lastTimestamp);
+	console.log(`Found ${newRelics.length} new relic(s) to send.`);
+
+	if (newRelics.length === 0) {
+		console.log("No new relics to send.");
+		return "No new relics to send.";
+	}
+
+	// Optional: HMAC signature
 	const signature = crypto
 		.createHmac("sha256", SECRET_KEY)
-		.update(JSON.stringify(relicsArray)) // sign the actual array
+		.update(JSON.stringify(newRelics))
 		.digest("hex");
 
-	// Server URL with username query
-	const SERVER_URL = `http://localhost:8080/api/relics/electron-data?username=player123`;
-
+	// Step 3: Send filtered relics to server
 	try {
-		const res = await axios.post(SERVER_URL, relicsArray, {
-			// <-- send array directly
-			headers: {
-				"Content-Type": "application/json",
-				"X-Signature": signature
+		const res = await axios.post(
+			`${SERVER_URL}/api/relics/electron-data?uuid=${userId}`,
+			newRelics,
+			{
+				headers: {
+					"Content-Type": "application/json",
+					"X-Signature": signature
+				}
 			}
-		});
+		);
+
 		console.log("Relics sent successfully:", res.data);
-	} catch (err: unknown) {
-		if (err instanceof Error) {
-			console.error("Failed to send relics:", err.message);
-		} else {
-			console.error("Failed to send relics:", err);
-		}
+		return res.data;
+	} catch (err) {
+		console.error("Failed to send relics:", err);
 		throw err;
 	}
 });

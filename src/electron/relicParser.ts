@@ -36,6 +36,7 @@ export interface RelicSubstat {
 	rolls?: {
 		totalRolls: number;
 		breakdown: { low: number; med: number; high: number };
+		value: number;
 	};
 }
 
@@ -147,6 +148,16 @@ export function parseRelicFromText(text: string): Relic | null {
 		if (s.name && s.value) {
 			let numericValue = parseFloat(s.value.replace("%", ""));
 			let tableKey = s.name;
+			const isPercentStat =
+				tableKey.endsWith("%") ||
+				s.value.includes("%") ||
+				[
+					"CRIT Rate",
+					"CRIT DMG",
+					"Effect Hit Rate",
+					"Effect RES",
+					"Break Effect"
+				].includes(tableKey);
 
 			if (s.value.includes("%") && ["DEF", "ATK", "HP"].includes(s.name)) {
 				tableKey = s.name + "%";
@@ -165,9 +176,19 @@ export function parseRelicFromText(text: string): Relic | null {
 			) {
 				numericValue /= 100;
 			}
-
+			numericValue = parseFloat(numericValue.toFixed(5));
 			const rolls = detectSubstatRolls(tableKey, numericValue);
-			s.rolls = rolls || undefined;
+
+			if (rolls) {
+				s.rolls = rolls;
+
+				if (isPercentStat) {
+					// truncate like the game (NOT round)
+					const corrected = Math.floor(rolls.value * 1000) / 10;
+
+					s.value = corrected.toFixed(1) + "%";
+				}
+			}
 		}
 	});
 
@@ -291,28 +312,31 @@ const rollTable: Record<string, [number, number, number]> = Object.fromEntries(
 		[r.values.low, r.values.med, r.values.high] as [number, number, number]
 	])
 );
-
+type RollResult = {
+	totalRolls: number;
+	breakdown: { low: number; med: number; high: number };
+	value: number;
+};
 // --- Substat roll calculator ---
 export function detectSubstatRolls(
 	stat: string,
 	observedValue: number,
 	maxRolls = 5
-) {
-	const tableStat = stat;
-	const values = rollTable[tableStat];
+): RollResult {
+	const values = rollTable[stat];
 	if (!values) {
 		throw new Error(`No roll table entry for ${stat}`);
 	}
 
 	const [low, med, high] = values;
-	const tolerance =
-		tableStat.endsWith("%") || tableStat.includes("Effect") ? 0.001 : 1;
 
-	let best: {
-		totalRolls: number;
-		breakdown: { low: number; med: number; high: number };
-	} | null = null;
+	const tolerance = stat.endsWith("%") || stat.includes("Effect") ? 0.002 : 1;
+
+	let best: RollResult | null = null;
+	let bestClosest: RollResult | null = null;
+
 	let bestDiff = Infinity;
+	let closestDiff = Infinity;
 
 	for (let a = 0; a <= maxRolls; a++) {
 		for (let b = 0; b <= maxRolls - a; b++) {
@@ -323,22 +347,38 @@ export function detectSubstatRolls(
 				const sum = a * low + b * med + c * high;
 				const diff = Math.abs(sum - observedValue);
 
-				if (diff < bestDiff && diff <= tolerance) {
+				const candidate: RollResult = {
+					totalRolls: rolls,
+					breakdown: { low: a, med: b, high: c },
+					value: sum
+				};
+
+				// closest match (no tolerance)
+				if (diff < closestDiff) {
+					closestDiff = diff;
+					bestClosest = candidate;
+				}
+
+				// best within tolerance
+				if (diff <= tolerance && diff < bestDiff) {
 					bestDiff = diff;
-					best = { totalRolls: rolls, breakdown: { low: a, med: b, high: c } };
+					best = candidate;
 				}
 			}
 		}
 	}
 
-	if (!best) {
-		throw new Error(
-			`Unable to detect substat rolls for ${stat} with observed value ${observedValue}`
-		);
+	if (best) {
+		console.log(`detectSubstatRolls(${stat}, ${observedValue}) →`, best);
+		return best;
 	}
 
-	console.log(`detectSubstatRolls(${stat}, ${observedValue}) →`, best);
-	return best;
+	console.warn(
+		`No exact match for ${stat} (${observedValue}). Using closest match.`,
+		bestClosest
+	);
+
+	return bestClosest!;
 }
 function fuzzyMatchStat(line: string, stats: string[]): string | null {
 	const threshold = 2; // allow up to 2 character differences
