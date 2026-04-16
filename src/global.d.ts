@@ -28,6 +28,8 @@ declare global {
 			getSavedRelics: () => Promise<Relic[]>;
 			removeSavedRelic: (index: number) => Promise<boolean>;
 			sendRelicsFile: () => Promise<string>;
+			saveTrainingImage: (data: string, fileName: string) => Promise<string>;
+			runOcr: (image: string) => Promise<string>;
 		};
 	}
 }

@@ -30,6 +30,8 @@ declare global {
 			getSavedRelics: () => Promise<Relic[]>;
 			removeSavedRelic: (index: number) => Promise<boolean>;
 			sendRelicsFile: () => Promise<string>;
+			saveTrainingImage: (data: string, fileName: string) => Promise<string>;
+			runOcr: (image: string) => Promise<string>;
 		};
 	}
 }
@@ -65,5 +67,8 @@ contextBridge.exposeInMainWorld("electron", {
 	getSavedRelics: () => ipcRenderer.invoke("GET_SAVED_RELICS"),
 	removeSavedRelic: (index: number) =>
 		ipcRenderer.invoke("REMOVE_RELIC", index),
-	sendRelicsFile: (): Promise<string> => ipcRenderer.invoke("sendRelicsFile")
+	sendRelicsFile: (): Promise<string> => ipcRenderer.invoke("sendRelicsFile"),
+	saveTrainingImage: (data: string, fileName: string) =>
+		ipcRenderer.invoke("SAVE_TRAINING_IMAGE", data, fileName),
+	runOcr: (image: string) => ipcRenderer.invoke("RUN_OCR", image)
 });

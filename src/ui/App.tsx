@@ -1,9 +1,9 @@
 // App.tsx
 import React, { useState, useEffect } from "react";
 import type { IpcRendererEvent } from "electron";
-import Tesseract from "tesseract.js";
 
 import type { Relic } from "../electron/relicParser.js";
+import Tesseract from "tesseract.js";
 export interface Rect {
 	start: { x: number; y: number };
 	end: { x: number; y: number };
@@ -29,7 +29,8 @@ const ScreenCapture: React.FC = () => {
 			// Crop the image
 			const cropped = await cropImage(data.image, data.rect);
 			setImageSrc(cropped);
-
+			// SAVE FOR TRAINING DATASET
+			await window.electron.saveTrainingImage(cropped, `relic_${Date.now()}`);
 			// OCR
 			const detectedText = await readText(cropped);
 
@@ -224,4 +225,10 @@ async function readText(image: string) {
 	console.log("OCR RESULT:", result.data.text);
 	return result.data.text;
 }
+//using my model
+
+// async function readText(image: string) {
+// 	const result = await window.electron.runOcr(image);
+// 	return result;
+// }
 export default ScreenCapture;

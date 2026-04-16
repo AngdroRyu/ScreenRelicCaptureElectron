@@ -13,10 +13,11 @@ import fs from "fs";
 import { parseRelicFromText } from "./relicParser.js";
 import { saveParsedRelic } from "./saveRelic.js";
 import type { Relic } from "./relicParser.js";
-import crypto from "crypto";
+// import crypto from "crypto";
 import axios from "axios";
 import { getOrCreateUser } from "./userManager.js";
-const SECRET_KEY = "supersecretkey"; // for HMAC signing, optional
+import { execFile } from "child_process";
+// const SECRET_KEY = "supersecretkey"; // for HMAC signing, optional
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
@@ -128,7 +129,7 @@ ipcMain.handle("SCREENSHOT", async () => {
 	const screen = sources[0];
 	return screen.thumbnail.toDataURL();
 });
-
+//should remove
 ipcMain.handle("save-screenshot", async (_event, dataUrl: string) => {
 	try {
 		const base64Data = dataUrl.replace(/^data:image\/png;base64,/, "");
@@ -302,10 +303,10 @@ ipcMain.handle("sendRelicsFile", async () => {
 	}
 
 	// Optional: HMAC signature
-	const signature = crypto
-		.createHmac("sha256", SECRET_KEY)
-		.update(JSON.stringify(newRelics))
-		.digest("hex");
+	// const signature = crypto
+	// 	.createHmac("sha256", SECRET_KEY)
+	// 	.update(JSON.stringify(newRelics))
+	// 	.digest("hex");
 
 	// Step 3: Send filtered relics to server
 	try {
@@ -314,8 +315,8 @@ ipcMain.handle("sendRelicsFile", async () => {
 			newRelics,
 			{
 				headers: {
-					"Content-Type": "application/json",
-					"X-Signature": signature
+					"Content-Type": "application/json"
+					// "X-Signature": signature
 				}
 			}
 		);
@@ -326,4 +327,41 @@ ipcMain.handle("sendRelicsFile", async () => {
 		console.error("Failed to send relics:", err);
 		throw err;
 	}
+});
+ipcMain.handle("SAVE_TRAINING_IMAGE", async (_, base64, fileName) => {
+	const clean = base64.replace(/^data:image\/png;base64,/, "");
+
+	const dir = path.join(app.getPath("documents"), "relic-training");
+
+	fs.mkdirSync(dir, { recursive: true });
+
+	const filePath = path.join(dir, `${fileName}.png`);
+
+	fs.writeFileSync(filePath, clean, "base64");
+
+	return filePath;
+});
+ipcMain.handle("RUN_OCR", async (_event, imageBase64) => {
+	const filePath = path.join(app.getPath("temp"), "ocr.png");
+
+	// convert base64 → file
+	fs.writeFileSync(
+		filePath,
+		imageBase64.replace(/^data:image\/png;base64,/, ""),
+		"base64"
+	);
+
+	return new Promise((resolve, reject) => {
+		execFile(
+			"tesseract",
+			[filePath, "stdout", "-l", "angdro"],
+			(err, stdout, stderr) => {
+				if (err) {
+					console.error(stderr);
+					return reject(err);
+				}
+				resolve(stdout.trim());
+			}
+		);
+	});
 });

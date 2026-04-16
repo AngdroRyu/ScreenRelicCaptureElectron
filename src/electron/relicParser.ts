@@ -101,7 +101,38 @@ function findRelicFromLookup(
 	console.warn("No relic match found in OCR text.");
 	return null;
 }
+function normalizeSubstatForRoll(
+	name: string,
+	value: string
+): { tableKey: string; numericValue: number; isPercent: boolean } {
+	let numericValue = parseFloat(value.replace("%", ""));
+	let tableKey = name;
 
+	const percentStats = [
+		"CRIT Rate",
+		"CRIT DMG",
+		"Effect Hit Rate",
+		"Effect RES",
+		"Break Effect"
+	];
+
+	const isPercent = value.includes("%") || percentStats.includes(name);
+
+	// Convert HP/ATK/DEF % versions
+	if (["HP", "ATK", "DEF"].includes(name) && value.includes("%")) {
+		tableKey = `${name}%`;
+		numericValue /= 100;
+	}
+
+	// Convert special % stats (if OCR gives 4.3 instead of 0.043)
+	if (percentStats.includes(name) && numericValue > 1) {
+		numericValue /= 100;
+	}
+
+	numericValue = parseFloat(numericValue.toFixed(5));
+
+	return { tableKey, numericValue, isPercent };
+}
 // --- Parser Function ---
 export function parseRelicFromText(text: string): Relic | null {
 	console.log("========== PARSE RELIC START ==========");
@@ -145,48 +176,32 @@ export function parseRelicFromText(text: string): Relic | null {
 
 	// 6️⃣ Detect rolls for each substat
 	parsedRelic.substats.forEach((s) => {
-		if (s.name && s.value) {
-			let numericValue = parseFloat(s.value.replace("%", ""));
-			let tableKey = s.name;
-			const isPercentStat =
-				tableKey.endsWith("%") ||
-				s.value.includes("%") ||
-				[
-					"CRIT Rate",
-					"CRIT DMG",
-					"Effect Hit Rate",
-					"Effect RES",
-					"Break Effect"
-				].includes(tableKey);
+		if (!s.name || !s.value) return;
 
-			if (s.value.includes("%") && ["DEF", "ATK", "HP"].includes(s.name)) {
-				tableKey = s.name + "%";
-				numericValue /= 100; // convert to fraction
-			}
+		const { tableKey, numericValue, isPercent } = normalizeSubstatForRoll(
+			s.name,
+			s.value
+		);
 
-			if (
-				[
-					"Break Effect",
-					"Effect Hit Rate",
-					"Effect RES",
-					"CRIT Rate",
-					"CRIT DMG"
-				].includes(s.name) &&
-				numericValue > 1
-			) {
-				numericValue /= 100;
-			}
-			numericValue = parseFloat(numericValue.toFixed(5));
-			const rolls = detectSubstatRolls(tableKey, numericValue);
+		let rolls;
+		try {
+			rolls = detectSubstatRolls(tableKey, numericValue);
+		} catch (err) {
+			console.warn(`Skipping roll detection for ${tableKey}`, err);
+			return;
+		}
 
-			if (rolls) {
-				s.rolls = rolls;
+		if (rolls) {
+			s.rolls = rolls;
 
-				if (isPercentStat) {
-					// truncate like the game (NOT round)
-					const corrected = Math.floor(rolls.value * 1000) / 10;
+			// 🔥 normalize display + identity
+			if (isPercent) {
+				const corrected = Math.floor(rolls.value * 1000) / 10;
+				s.value = corrected.toFixed(1) + "%";
 
-					s.value = corrected.toFixed(1) + "%";
+				// convert to DEF%, ATK%, HP%
+				if (["HP", "ATK", "DEF"].includes(s.name)) {
+					s.name = `${s.name}%`;
 				}
 			}
 		}
@@ -264,6 +279,7 @@ function detectSubstats(text: string) {
 			if (match) {
 				console.log(`Substat found: ${stat} ${match[1]}`);
 				found.push({ name: stat, value: match[1] });
+				break;
 			}
 		}
 	}
@@ -273,9 +289,17 @@ function detectSubstats(text: string) {
 			`Expected 4 substats, but found ${found.length}. Check OCR or main stat detection.`
 		);
 	}
+	// Remove duplicates (in case of OCR errors), I really havent seen this but just in case
+	const seen = new Set<string>();
+	const uniqueSubstats = found.filter((s) => {
+		const key = `${s.name}-${s.value}`;
+		if (seen.has(key)) return false;
+		seen.add(key);
+		return true;
+	});
 
-	console.log("Final substats:", found);
-	return found;
+	console.log("Final substats:", uniqueSubstats);
+	return uniqueSubstats;
 }
 
 // --- Substat growth table ---
@@ -285,7 +309,7 @@ interface SubstatGrowth {
 }
 
 const SubstatGrowthValues: SubstatGrowth[] = [
-	{ stat: "SPD", values: { low: 2, med: 2.3, high: 2.6 } },
+	{ stat: "SPD", values: { low: 2, med: 2.3, high: 2.6 } }, //likely will never see anything other than 2
 	{ stat: "HP", values: { low: 33.87, med: 38.103755, high: 42.33751 } },
 	{ stat: "ATK", values: { low: 16.935, med: 19.051877, high: 21.168754 } },
 	{ stat: "DEF", values: { low: 16.935, med: 19.051877, high: 21.168754 } },
